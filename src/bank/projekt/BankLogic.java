@@ -19,12 +19,12 @@ public class BankLogic {
     
     public static ArrayList<String> getCustomers(){
         //Returnerar en ArrayList<String> som innehåller en presentation av bankens alla kunder (personnummer och namn)
-        ArrayList<String> shit = new ArrayList<String>();
+        ArrayList<String> Customers = new ArrayList<String>();
         for(Customer e : kunder){
-            shit.add(Long.toString(e.pNr));
-            shit.add(e.name);
+            Customers.add(Long.toString(e.pNr));
+            Customers.add(e.name);
         }
-        return shit;
+        return Customers;
     }
     public static boolean addCustomer(String name, long pNr){
         //Skapar upp en ny kund med namnet name samt personnumer pNr, kunden skapas endast om det inte 
@@ -52,17 +52,17 @@ public class BankLogic {
     public static ArrayList<String> getCustomer(long pNr){
         //Returnerar en List<String> som innehåller informationen om kunden inklusive dennes konton. 
         //Första platsen i listan är förslagsvis reserverad för kundens namn och personnummer sedan följer informationen om kundens konton.
-        ArrayList<String> shit = new ArrayList<String>();
+        ArrayList<String> Customers = new ArrayList<String>();
         if(kunder.size() > 0){
             for(Customer e : kunder){
                 if(e.pNr == pNr){
-                shit.add(e.name);
-                shit.add(Long.toString(e.pNr));
+                Customers.add(e.name);
+                Customers.add(Long.toString(e.pNr));
                 }
             }
         }
         
-        return shit;
+        return Customers;
         
     }
     public static boolean changeCustomerName(String name, long pNr){
@@ -83,8 +83,8 @@ public class BankLogic {
     public ArrayList<String> removeCustomer(long pNr){
         //Tar bort kund med personnummer pNr ur banken, alla kundens eventuella konton tas också bort och resultatet returneras.
         //Listan som returneras ska innehålla information om alla konton som togs bort, saldot som kunden får tillbaka samt vad räntan blev.
-        ArrayList<String> shit = new ArrayList<String>();
-        return shit;
+        ArrayList<String> Customers = new ArrayList<String>();
+        return Customers;
     }
     
     public int addSavingsAccount(long pNr){
@@ -123,8 +123,8 @@ public class BankLogic {
     }
     
     public ArrayList<String> getTransactions(long pNr, int accountId){
-        ArrayList<String> shit = new ArrayList<String>();
-        return shit;
+        ArrayList<String> Customers = new ArrayList<String>();
+        return Customers;
     }
     
     
