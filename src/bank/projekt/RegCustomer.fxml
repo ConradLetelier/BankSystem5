@@ -1,0 +1,109 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.*?>
+<?import javafx.scene.paint.*?>
+<?import javafx.scene.shape.*?>
+<?import javafx.scene.effect.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.image.*?>
+<?import java.lang.*?>
+<?import javafx.scene.layout.*?>
+
+
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="496.0" prefWidth="527.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1">
+   <children>
+      <BorderPane layoutX="156.0" layoutY="23.0" prefHeight="496.0" prefWidth="527.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+         <bottom>
+            <HBox prefHeight="32.0" prefWidth="527.0" BorderPane.alignment="CENTER" />
+         </bottom>
+         <left>
+            <VBox prefHeight="200.0" prefWidth="100.0" BorderPane.alignment="CENTER" />
+         </left>
+         <right>
+            <VBox prefHeight="200.0" prefWidth="100.0" BorderPane.alignment="CENTER" />
+         </right>
+         <top>
+            <AnchorPane prefHeight="82.0" prefWidth="527.0" BorderPane.alignment="CENTER">
+               <children>
+                  <ImageView pickOnBounds="true" preserveRatio="true" />
+                  <ImageView fitHeight="125.0" fitWidth="596.0" layoutX="10.0" layoutY="10.0" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@Example.jpg" />
+                     </image>
+                  </ImageView>
+               </children>
+            </AnchorPane>
+         </top>
+         <center>
+            <GridPane BorderPane.alignment="CENTER">
+               <children>
+                  <HBox prefHeight="28.0" prefWidth="304.0" GridPane.columnIndex="1">
+                     <children>
+                        <Label text="Register customer" />
+                     </children>
+                  </HBox>
+                  <Rectangle arcHeight="5.0" arcWidth="5.0" depthTest="DISABLE" fill="#f8f6f6" height="272.0" stroke="#bcbcbc" strokeLineCap="ROUND" strokeLineJoin="ROUND" strokeType="OUTSIDE" width="314.0" GridPane.columnIndex="1" GridPane.rowIndex="1" />
+                  <VBox alignment="TOP_CENTER" prefHeight="177.0" prefWidth="304.0" GridPane.columnIndex="1" GridPane.rowIndex="1">
+                     <children>
+                        <HBox alignment="CENTER" prefHeight="100.0" prefWidth="200.0">
+                           <children>
+                              <Label text="Name:">
+                                 <HBox.margin>
+                                    <Insets left="30.0" />
+                                 </HBox.margin>
+                              </Label>
+                              <Region HBox.hgrow="ALWAYS" />
+                              <TextField alignment="TOP_LEFT" prefHeight="25.0" prefWidth="150.0">
+                                 <HBox.margin>
+                                    <Insets />
+                                 </HBox.margin>
+                              </TextField>
+                           </children>
+                        </HBox>
+                        <HBox alignment="CENTER" layoutX="10.0" layoutY="110.0" prefHeight="100.0" prefWidth="200.0">
+                           <children>
+                              <Label text="Person number:">
+                                 <HBox.margin>
+                                    <Insets left="30.0" />
+                                 </HBox.margin>
+                              </Label>
+                              <Region HBox.hgrow="ALWAYS" />
+                              <TextField alignment="TOP_LEFT" prefHeight="25.0" prefWidth="150.0">
+                                 <HBox.margin>
+                                    <Insets />
+                                 </HBox.margin>
+                              </TextField>
+                           </children>
+                        </HBox>
+                     </children>
+                  </VBox>
+                  <HBox alignment="CENTER" prefHeight="100.0" prefWidth="200.0" GridPane.columnIndex="1" GridPane.rowIndex="2">
+                     <children>
+                        <Region HBox.hgrow="ALWAYS" />
+                        <Button mnemonicParsing="false" text="Register" />
+                        <Region HBox.hgrow="ALWAYS" />
+                        <Button mnemonicParsing="false" text="Clear" />
+                        <Region HBox.hgrow="ALWAYS" />
+                        <Button mnemonicParsing="false" text="Cancel" />
+                        <Region HBox.hgrow="ALWAYS" />
+                     </children>
+                     <GridPane.margin>
+                        <Insets bottom="5.0" left="5.0" right="5.0" top="30.0" />
+                     </GridPane.margin>
+                  </HBox>
+               </children>
+               <columnConstraints>
+                  <ColumnConstraints hgrow="SOMETIMES" maxWidth="99.0" minWidth="7.0" prefWidth="10.0" />
+                  <ColumnConstraints hgrow="SOMETIMES" maxWidth="306.0" minWidth="10.0" prefWidth="303.0" />
+                  <ColumnConstraints hgrow="SOMETIMES" maxWidth="104.0" minWidth="10.0" prefWidth="10.0" />
+               </columnConstraints>
+               <rowConstraints>
+                  <RowConstraints maxHeight="126.0" minHeight="0.0" prefHeight="37.0" vgrow="SOMETIMES" />
+                  <RowConstraints maxHeight="334.0" minHeight="10.0" prefHeight="243.0" vgrow="SOMETIMES" />
+                  <RowConstraints maxHeight="111.0" minHeight="0.0" prefHeight="52.0" vgrow="SOMETIMES" />
+               </rowConstraints>
+            </GridPane>
+         </center>
+      </BorderPane>
+   </children>
+</AnchorPane>
