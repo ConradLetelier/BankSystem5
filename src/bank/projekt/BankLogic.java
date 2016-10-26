@@ -123,9 +123,27 @@ public class BankLogic {
     }
     
     public ArrayList<String> getTransactions(long pNr, int accountId){
-        ArrayList<String> shit = new ArrayList<String>();
-        return shit;
+        ArrayList<String> Transactions = new ArrayList<String>();
+        return Transactions;
     }
+    
+    public static int Check(int[] accountNumbers){ 
+        //We sort the Array, and then compare every single value against what they should be.
+        //If we find that a Index is not co-responding (i.e a gap), we return the value to fill that gap with.
+        Arrays.sort(accountNumbers); 
+        for(int i = 0; i < accountNumbers.length ; i++){
+            if(accountNumbers[i] > (1001+i)){
+                return (1001+i);
+            }
+        }
+        
+        return (1001+accountNumbers.length); //If the loop returned nothing, we know that all the gaps are filled, and we return
+        //the relevant number to have for the account.
+        
+    }
+                
+                    
+                    
     
     
     //Programmet ska göras så stabilt som möjligt, även om användaren missförstår instruktionerna ska han/hon inte lyckas krascha programmet i första taget. 
