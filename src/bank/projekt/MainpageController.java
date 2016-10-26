@@ -32,7 +32,7 @@ public class MainpageController implements Initializable {
     
     @FXML
     private void addCustomer(ActionEvent event) throws IOException {
-           Parent root = FXMLLoader.load(getClass().getResource("RegCustomer.fxml"));
+        Parent root = FXMLLoader.load(getClass().getResource("RegCustomer.fxml"));
         Scene s = new Scene(root);
         Stage stg =(Stage)((Node)event.getSource()).getScene().getWindow();
         stg.setScene(s);
