@@ -27,10 +27,9 @@ import javafx.stage.Stage;
  *
  * @author Conrad
  */
-public class RegCustomerController implements Initializable {
+public class ComfirmController implements Initializable {
 
-    @FXML
-    private Label label;
+    
     @FXML
     private Button cancelButton;
 

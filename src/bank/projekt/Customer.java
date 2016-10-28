@@ -20,6 +20,21 @@ public class Customer {
         this.pNr = pNr;
     }
     
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public long getPnr() {
+        return pNr;
+    }
+
+    public void setpNr(long pNr) {
+        this.pNr = pNr;
+    }
   
     
 

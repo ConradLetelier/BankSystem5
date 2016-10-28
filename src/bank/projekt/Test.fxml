@@ -57,9 +57,9 @@
                   <Font name="System Bold" size="12.0" />
                </font>
             </Label>
-            <Button fx:id="addcustomer" mnemonicParsing="false" onAction="#addCustomer" prefWidth="160.0" text="Add customer" />
-            <Button fx:id="removecustomer" mnemonicParsing="false" onAction="#removeCustomer" prefWidth="160.0" text="Remove customer" />
-            <Button fx:id="changecustomer" mnemonicParsing="false" onAction="#changeCustomer" prefWidth="160.0" text="Change customer info" />
+            <Button fx:id="regButton" mnemonicParsing="false" onAction="#addCustomer" prefWidth="160.0" text="Add customer" />
+            <Button fx:id="removeCustomerButton" mnemonicParsing="false" onAction="#removeCustomer" prefWidth="160.0" text="Remove customer" />
+            <Button fx:id="changeCustomerButton" mnemonicParsing="false" onAction="#changeCustomer" prefWidth="160.0" text="Change customer info" />
             <Label text="Account options">
                <font>
                   <Font name="System Bold" size="12.0" />
@@ -67,9 +67,9 @@
             <Separator prefWidth="200.0" />
             <Button mnemonicParsing="false" prefWidth="160.0" text="Add new savings account" />
             <Button mnemonicParsing="false" prefWidth="160.0" text="Add new credit account" />
-            <Button mnemonicParsing="false" prefWidth="160.0" text="Remove account" />
-            <Button mnemonicParsing="false" prefWidth="160.0" text="Withdraw" />
-            <Button mnemonicParsing="false" prefWidth="160.0" text="Deposit" />
+            <Button fx:id="removeAccountButton" mnemonicParsing="false" onAction="#removeAccount" prefWidth="160.0" text="Remove account" />
+            <Button fx:id="withdrawButton" mnemonicParsing="false" onAction="#withdraw" prefWidth="160.0" text="Withdraw" />
+            <Button fx:id="depositButton" mnemonicParsing="false" onAction="#deposit" prefWidth="160.0" text="Deposit" />
             <Button mnemonicParsing="false" prefWidth="160.0" text="Transaction History" />
             <Region prefHeight="0.0" prefWidth="163.0" VBox.vgrow="ALWAYS" />
             <Separator prefHeight="0.0" prefWidth="163.0" />
@@ -109,10 +109,10 @@
                   <Font name="System Bold" size="20.0" />
                </font>
             </Label>
-            <TableView prefHeight="405.0" prefWidth="249.0" VBox.vgrow="ALWAYS">
+            <TableView fx:id="table1" prefHeight="405.0" prefWidth="249.0" VBox.vgrow="ALWAYS">
               <columns>
-                <TableColumn prefWidth="110.0" text="Name" />
-                <TableColumn prefWidth="137.0" text="Person Number" />
+                <TableColumn id="a" fx:id="NameColumn" prefWidth="110.0" text="Name" />
+                <TableColumn id="b" fx:id="pnrColumn" prefWidth="137.0" text="Person Number" />
               </columns>
             </TableView>
          </children>
@@ -134,11 +134,11 @@
                         <Font name="System Bold" size="20.0" />
                      </font>
                   </Label>
-                  <TableView prefHeight="469.0" prefWidth="405.0" VBox.vgrow="ALWAYS">
+                  <TableView fx:id="table2" prefHeight="469.0" prefWidth="405.0" VBox.vgrow="ALWAYS">
                      <columns>
-                        <TableColumn prefWidth="175.0" text="Type of account" />
-                        <TableColumn prefWidth="166.0" text="Account ID" />
-                        <TableColumn prefWidth="131.0" text="Balance" />
+                        <TableColumn fx:id="accountTypeColumn" prefWidth="175.0" text="Type of account" />
+                        <TableColumn fx:id="idColumn" prefWidth="166.0" text="Account ID" />
+                        <TableColumn fx:id="balanceColumn" prefWidth="131.0" text="Balance" />
                      </columns>
                      <columnResizePolicy>
                         <TableView fx:constant="CONSTRAINED_RESIZE_POLICY" />

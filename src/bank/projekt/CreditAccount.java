@@ -26,5 +26,54 @@ public class CreditAccount{
         this.limit = limit;
         this.kontoNummer = kontoNummer;
     }
+
+    public String getAccountType() {
+        return accountType;
+    }
+
+    public void setAccountType(String accountType) {
+        this.accountType = accountType;
+    }
+
+    public int getKontoNummer() {
+        return kontoNummer;
+    }
+
+    public void setKontoNummer(int kontoNummer) {
+        this.kontoNummer = kontoNummer;
+    }
+
+    public double getSaldo() {
+        return saldo;
+    }
+
+    public void setSaldo(double saldo) {
+        this.saldo = saldo;
+    }
+
+    public double getInterest() {
+        return interest;
+    }
+
+    public void setInterest(double interest) {
+        this.interest = interest;
+    }
+
+    public double getDebt_interest() {
+        return debt_interest;
+    }
+
+    public void setDebt_interest(double debt_interest) {
+        this.debt_interest = debt_interest;
+    }
+
+    public double getLimit() {
+        return limit;
+    }
+
+    public void setLimit(double limit) {
+        this.limit = limit;
+    }
+    
     
 }

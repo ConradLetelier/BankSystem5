@@ -27,6 +27,46 @@ public class SavingsAccount {
         
 
     }
+
+    public boolean isWithdrawn() {
+        return withdrawn;
+    }
+
+    public void setWithdrawn(boolean withdrawn) {
+        this.withdrawn = withdrawn;
+    }
+
+    public double getSaldo() {
+        return saldo;
+    }
+
+    public void setSaldo(double saldo) {
+        this.saldo = saldo;
+    }
+
+    public double getInterest() {
+        return interest;
+    }
+
+    public void setInterest(double interest) {
+        this.interest = interest;
+    }
+
+    public int getKontoNummer() {
+        return kontoNummer;
+    }
+
+    public void setKontoNummer(int kontoNummer) {
+        this.kontoNummer = kontoNummer;
+    }
+
+    public String getAccountType() {
+        return accountType;
+    }
+
+    public void setAccountType(String accountType) {
+        this.accountType = accountType;
+    }
     
     public boolean getWithdrawn(){
         return this.withdrawn;

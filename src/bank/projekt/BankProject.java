@@ -444,6 +444,7 @@ public class BankProject extends Application {
         Scene scene = new Scene(root);
         
         stage.setScene(scene);
+        stage.setTitle("Bank System");
         stage.show();
     }
 
