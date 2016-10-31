@@ -21,6 +21,7 @@ import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.ListView;
+import javafx.scene.control.TextField;
 import javafx.stage.Stage;
 
 /**
@@ -30,11 +31,20 @@ import javafx.stage.Stage;
 public class RegCustomerController implements Initializable {
 
     @FXML
-    private Label label;
-    @FXML
     private Button cancelButton;
-
     @FXML
+    private TextField txtfirstname;
+    @FXML
+    private TextField txtpn;
+    @FXML
+    private Button register;
+    @FXML
+    private Button clear;
+    @FXML
+    private TextField txtlastname;
+    @FXML
+    private Label notification;
+
     private void cancel(ActionEvent event) throws IOException {
 
         Stage stage = (Stage) cancelButton.getScene().getWindow();
@@ -46,6 +56,40 @@ public class RegCustomerController implements Initializable {
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         // TODO
+    }
+
+    @FXML
+    private void handleregister(ActionEvent event) throws IOException {
+    if(txtfirstname.getText().isEmpty() || txtlastname.getText().isEmpty() || txtpn.getText().isEmpty()){
+    notification.setText("Fill all the values");
+    
+    
+    }
+    else{
+       BankLogic.addCustomer(txtfirstname.getText(), Integer.parseInt(txtpn.getText()));
+        
+           
+    }
+    Stage stage = (Stage) cancelButton.getScene().getWindow();
+    stage.close();
+    
+    }
+
+    @FXML
+    private void handleclear(ActionEvent event) {
+    txtfirstname.setText("");
+    txtlastname.setText("");
+    txtpn.setText("");
+    
+    }
+
+    @FXML
+    private void handelcancel(ActionEvent event) throws IOException {
+   
+           Stage stage = (Stage) cancelButton.getScene().getWindow();
+
+        stage.close();
+    
     }
 
 }

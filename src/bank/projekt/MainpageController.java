@@ -47,7 +47,7 @@ public class MainpageController implements Initializable {
     @FXML
     private Button depositButton;
     @FXML
-    private TableView<Customer> table1;
+    private  TableView<Customer> table1;
     @FXML
     private TableView<SavingsAccount> table2;
     @FXML
@@ -60,10 +60,12 @@ public class MainpageController implements Initializable {
     private TableColumn<Customer, String> NameColumn;
     @FXML
     private TableColumn<Customer, Long> pnrColumn;
+    
+ 
 
     //Table data
-    final ObservableList<Customer> data = FXCollections.observableArrayList();
-    final ObservableList<SavingsAccount> data2 = FXCollections.observableArrayList();
+    public static ObservableList<Customer> data = FXCollections.observableArrayList();
+    public static ObservableList<SavingsAccount> data2 = FXCollections.observableArrayList();
 
     @FXML
     private void addCustomer(ActionEvent event) throws IOException {
@@ -171,9 +173,12 @@ public class MainpageController implements Initializable {
         idColumn.setCellValueFactory(new PropertyValueFactory<SavingsAccount, Integer>("kontoNummer"));
         balanceColumn.setCellValueFactory(new PropertyValueFactory<SavingsAccount, Double>("saldo"));
 
+        
         table1.setItems(data);
         table2.setItems(data2);
 
     }
-
+    
+    
 }
+
