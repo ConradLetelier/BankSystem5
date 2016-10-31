@@ -23,6 +23,7 @@ import javafx.scene.control.Label;
 import javafx.scene.control.ListView;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
+import javafx.scene.control.TextField;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
@@ -34,7 +35,7 @@ import javafx.stage.Stage;
 public class MainpageController implements Initializable {
 
     @FXML
-    private Label label;
+    private Label labelText;
     @FXML
     private Button regButton;
     @FXML
@@ -48,7 +49,7 @@ public class MainpageController implements Initializable {
     @FXML
     private Button depositButton;
     @FXML
-    private  TableView<Customer> table1;
+    private TableView<Customer> table1;
     @FXML
     private TableView<SavingsAccount> table2;
     @FXML
@@ -61,8 +62,8 @@ public class MainpageController implements Initializable {
     private TableColumn<Customer, String> NameColumn;
     @FXML
     private TableColumn<Customer, Long> pnrColumn;
-    
- 
+    @FXML
+    private TextField nameInputSearch;
 
     //Table data
     public static ObservableList<Customer> data = FXCollections.observableArrayList();
@@ -81,41 +82,49 @@ public class MainpageController implements Initializable {
         stage.initModality(Modality.APPLICATION_MODAL);
         stage.initOwner(regButton.getScene().getWindow());
         stage.showAndWait();
-        
-          Parent root2 = FXMLLoader.load(getClass().getResource("Test.fxml"));
-        Scene s = new Scene(root2);
-        Stage stg =(Stage)((Node)event.getSource()).getScene().getWindow();
-        stg.setScene(s);
-        stg.show();
-        
-    }
-     @FXML
-    private void removeCustomer(ActionEvent event) throws IOException {
 
-        Stage stage;
-        Parent root;
-
-        stage = new Stage();
-        root = FXMLLoader.load(getClass().getResource("RemoveComfirm.fxml"));
-        stage.setScene(new Scene(root));
-        stage.setTitle("Comfirm");
-        stage.initModality(Modality.APPLICATION_MODAL);
-        stage.initOwner(removeCustomerButton.getScene().getWindow());
-        stage.showAndWait();
-        
-        if(removeChecker){
-            BankLogic.kunder.remove(table1.getSelectionModel().getSelectedIndex());
-            data.remove(table1.getSelectionModel().getSelectedIndex());
-        }
-        removeChecker = false;
         Parent root2 = FXMLLoader.load(getClass().getResource("Test.fxml"));
         Scene s = new Scene(root2);
-        Stage stg =(Stage)((Node)event.getSource()).getScene().getWindow();
+        Stage stg = (Stage) ((Node) event.getSource()).getScene().getWindow();
         stg.setScene(s);
         stg.show();
 
     }
-     @FXML
+
+    @FXML
+    private void removeCustomer(ActionEvent event) throws IOException {
+
+        if (!(table1.getSelectionModel().getSelectedIndex() == -1)) {
+            Stage stage;
+            Parent root;
+
+            stage = new Stage();
+            root = FXMLLoader.load(getClass().getResource("RemoveComfirm.fxml"));
+            stage.setScene(new Scene(root));
+            stage.setTitle("Comfirm");
+            stage.initModality(Modality.APPLICATION_MODAL);
+            stage.initOwner(removeCustomerButton.getScene().getWindow());
+            stage.showAndWait();
+
+            if (removeChecker) {
+                BankLogic.kunder.remove(table1.getSelectionModel().getSelectedIndex());
+                data.remove(table1.getSelectionModel().getSelectedIndex());
+            }
+            removeChecker = false;
+            Parent root2 = FXMLLoader.load(getClass().getResource("Test.fxml"));
+            Scene s = new Scene(root2);
+            Stage stg = (Stage) ((Node) event.getSource()).getScene().getWindow();
+            stg.setScene(s);
+            stg.show();
+
+        } else {
+            labelText.setText("Please choose a customer");
+
+            System.out.println("hh");
+        }
+    }
+
+    @FXML
     private void changeCustomer(ActionEvent event) throws IOException {
 
         Stage stage;
@@ -127,11 +136,10 @@ public class MainpageController implements Initializable {
         stage.initModality(Modality.APPLICATION_MODAL);
         stage.initOwner(changeCustomerButton.getScene().getWindow());
         stage.showAndWait();
-        
-    
 
     }
-       @FXML
+
+    @FXML
     private void removeAccount(ActionEvent event) throws IOException {
 
         Stage stage;
@@ -145,7 +153,8 @@ public class MainpageController implements Initializable {
         stage.showAndWait();
 
     }
-       @FXML
+
+    @FXML
     private void withdraw(ActionEvent event) throws IOException {
 
         Stage stage;
@@ -159,7 +168,8 @@ public class MainpageController implements Initializable {
         stage.showAndWait();
 
     }
-       @FXML
+
+    @FXML
     private void deposit(ActionEvent event) throws IOException {
 
         Stage stage;
@@ -174,6 +184,11 @@ public class MainpageController implements Initializable {
 
     }
 
+    @FXML
+    public void search(ActionEvent event) {
+        System.out.println("s");
+    }
+
     @Override
     public void initialize(URL url, ResourceBundle rb) {
 
@@ -183,12 +198,9 @@ public class MainpageController implements Initializable {
         idColumn.setCellValueFactory(new PropertyValueFactory<SavingsAccount, Integer>("kontoNummer"));
         balanceColumn.setCellValueFactory(new PropertyValueFactory<SavingsAccount, Double>("saldo"));
 
-        
         table1.setItems(data);
         table2.setItems(data2);
 
     }
-    
-    
-}
 
+}
