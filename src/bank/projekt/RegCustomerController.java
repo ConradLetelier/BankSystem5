@@ -5,6 +5,7 @@
  */
 package bank.projekt;
 
+import static bank.projekt.MainpageController.data;
 import java.io.IOException;
 import java.net.URL;
 import java.util.ResourceBundle;
@@ -66,7 +67,15 @@ public class RegCustomerController implements Initializable {
     
     }
     else{
-       BankLogic.addCustomer(txtfirstname.getText(), Integer.parseInt(txtpn.getText()));
+       
+        
+        BankLogic.addCustomer(txtfirstname.getText(), Integer.parseInt(txtpn.getText()));
+        
+
+            Customer listCust = new Customer(txtfirstname.getText(), Integer.parseInt(txtpn.getText()));
+            data.add(listCust);
+
+        
         
            
     }

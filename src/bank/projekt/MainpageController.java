@@ -162,17 +162,7 @@ public class MainpageController implements Initializable {
 
     @Override
     public void initialize(URL url, ResourceBundle rb) {
-//        Customer a = new Customer("Frank", 232);
-//        SavingsAccount b = new SavingsAccount(12);
-//        data2.add(b);
-//        BankLogic.kunder.add(a);
 
-        for (int i = 0; i < BankLogic.kunder.size(); i++) {
-
-            Customer listCust = new Customer(BankLogic.kunder.get(i).getName(), BankLogic.kunder.get(i).getPnr());
-            data.add(listCust);
-
-        }
         NameColumn.setCellValueFactory(new PropertyValueFactory<Customer, String>("Name"));
         pnrColumn.setCellValueFactory(new PropertyValueFactory<Customer, Long>("pnr"));
         accountTypeColumn.setCellValueFactory(new PropertyValueFactory<SavingsAccount, String>("accountType"));
