@@ -20,7 +20,8 @@ import javafx.stage.Stage;
  * @author ULTRA
  */
 public class RemoveComfirmController implements Initializable {
-
+    
+    public static boolean removeChecker = false;
     @FXML
     private Button yesremove;
     @FXML
@@ -37,13 +38,19 @@ public class RemoveComfirmController implements Initializable {
 
     @FXML
     private void handleyesremove(ActionEvent event) {
-        
+        removeChecker=true;
+         Stage stage = (Stage) yesremove.getScene().getWindow();
+
+        stage.close();
     
     }
 
     @FXML
     private void handlecancel(ActionEvent event) {
         
+         Stage stage = (Stage) cancel.getScene().getWindow();
+
+        stage.close();
     }
     
 }

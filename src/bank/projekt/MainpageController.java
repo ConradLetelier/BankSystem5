@@ -5,6 +5,7 @@
  */
 package bank.projekt;
 
+import static bank.projekt.RemoveComfirmController.removeChecker;
 import java.io.IOException;
 import java.net.URL;
 import java.util.ResourceBundle;
@@ -101,6 +102,17 @@ public class MainpageController implements Initializable {
         stage.initModality(Modality.APPLICATION_MODAL);
         stage.initOwner(removeCustomerButton.getScene().getWindow());
         stage.showAndWait();
+        
+        if(removeChecker){
+            BankLogic.kunder.remove(table1.getSelectionModel().getSelectedIndex());
+            data.remove(table1.getSelectionModel().getSelectedIndex());
+        }
+        removeChecker = false;
+        Parent root2 = FXMLLoader.load(getClass().getResource("Test.fxml"));
+        Scene s = new Scene(root2);
+        Stage stg =(Stage)((Node)event.getSource()).getScene().getWindow();
+        stg.setScene(s);
+        stg.show();
 
     }
      @FXML
@@ -115,6 +127,8 @@ public class MainpageController implements Initializable {
         stage.initModality(Modality.APPLICATION_MODAL);
         stage.initOwner(changeCustomerButton.getScene().getWindow());
         stage.showAndWait();
+        
+    
 
     }
        @FXML
