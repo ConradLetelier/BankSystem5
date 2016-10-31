@@ -80,7 +80,13 @@ public class MainpageController implements Initializable {
         stage.initModality(Modality.APPLICATION_MODAL);
         stage.initOwner(regButton.getScene().getWindow());
         stage.showAndWait();
-
+        
+          Parent root2 = FXMLLoader.load(getClass().getResource("Test.fxml"));
+        Scene s = new Scene(root2);
+        Stage stg =(Stage)((Node)event.getSource()).getScene().getWindow();
+        stg.setScene(s);
+        stg.show();
+        
     }
      @FXML
     private void removeCustomer(ActionEvent event) throws IOException {
@@ -156,10 +162,10 @@ public class MainpageController implements Initializable {
 
     @Override
     public void initialize(URL url, ResourceBundle rb) {
-        Customer a = new Customer("Frank", 232);
-        SavingsAccount b = new SavingsAccount(12);
-        data2.add(b);
-        BankLogic.kunder.add(a);
+//        Customer a = new Customer("Frank", 232);
+//        SavingsAccount b = new SavingsAccount(12);
+//        data2.add(b);
+//        BankLogic.kunder.add(a);
 
         for (int i = 0; i < BankLogic.kunder.size(); i++) {
 
