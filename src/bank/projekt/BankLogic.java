@@ -19,12 +19,12 @@ public class BankLogic {
     
     public static ArrayList<String> getCustomers(){
         //Returnerar en ArrayList<String> som innehåller en presentation av bankens alla kunder (personnummer och namn)
-        ArrayList<String> shit = new ArrayList<String>();
-        for(Customer e : kunder){
-            shit.add(Long.toString(e.pNr));
-            shit.add(e.name);
+
+ ArrayList<String> customer_data = new ArrayList<String>();
+        for (int i = 0; i < kunder.size(); i++) {
+            customer_data.add(kunder.get(i).getCustomer());
         }
-        return shit;
+        return customer_data;
     }
     public static boolean addCustomer(String name, long pNr){
         //Skapar upp en ny kund med namnet name samt personnumer pNr, kunden skapas endast om det inte 
@@ -83,48 +83,118 @@ public class BankLogic {
     public ArrayList<String> removeCustomer(long pNr){
         //Tar bort kund med personnummer pNr ur banken, alla kundens eventuella konton tas också bort och resultatet returneras.
         //Listan som returneras ska innehålla information om alla konton som togs bort, saldot som kunden får tillbaka samt vad räntan blev.
-        ArrayList<String> shit = new ArrayList<String>();
-        return shit;
+           ArrayList<String> intro = new ArrayList<String>();
+        Customer deletedCustomer = new Customer();
+        for (int i = 0; i < kunder.size(); i++) {
+            if (kunder.get(i).getPnr()== pNr) {
+                deletedCustomer = kunder.remove(i); // The deleted
+                intro.add(deletedCustomer.getCustomer());
+                for (Account list : deletedCustomer.getAllAccounts()) {
+                    intro.add(list.getAccount());
+                }
+                return intro;
+            }
+        }
+        return null;
     }
     
     public int addSavingsAccount(long pNr){
         //Skapar ett konto till kund med personnummer pNr, returnerar kontonumret som 
         //det skapade kontot fick alternativt returneras –1 om inget konto skapades.
-        return 1;
+             for (int i = 0; i < kunder.size(); i++) {
+            if (kunder.get(i).getPnr()== pNr) {
+                kunder.get(i).addAccounts(new SavingsAccount());
+                return kunder.get(i).getLastAccountNr();
+            }
+        }
+        return -1;
     }
     
     public String getAccount(long pNr, int accountId){
         //Returnerar en String som innehåller presentation av kontot med kontonnummer accountId som tillhör kunden pNr 
         //(kontonummer, saldo, kontotyp, räntesats).
-        
-        return "lol";
+           for (Customer client : kunder) {
+            if (client.getPnr()== pNr) {
+                for (Account account : client.getAllAccounts()) {
+                    if (account.getAcc_num() == accountId) {
+                        return account.getAccount();
+                    }
+                }
+            }
+        }
+        return null;
     }
     
     public boolean deposit(long pNr, int accountId, double amount){
         //Gör en insättning på konto med kontonnummer accountId som tillhör kunden pNr, returnerar true om det gick bra annars false.
-        return true;
+         for (Customer person : kunder) {
+            if (person.getPnr()== pNr) {
+                for (Account account : person.getAllAccounts()) {
+                    if (account.getAcc_num() == accountId) {
+                        account.deposit(amount);
+                        return true;
+                    }
+                }
+            }
+ 
+        }
+        return false;
     }
     
-    public boolean withdraw(long pNr, int accountID, double amount){
+    public boolean withdraw(long pNr, int accountId, double amount){
         //Gör ett uttag på konto med kontonnummer accountId som tillhör kunden pNr, returnerar true om det gick bra annars false.
+         for (Customer client : kunder) {
+            if (client.getPnr()== pNr) {
+                for (Account account : client.getAllAccounts()) {
+                    if (account.getAcc_num() == accountId) {
+                        account.setAmmountOfWithdraws(account.getAmmountOfWithdraws()+1);
+                        return account.withdraw(amount);
+                    }
+                }
+            }
+        }
         return false;
     }
     
     public String closeAccount(long pNr, int accountId){
         //Stänger ett konto med kontonnummer accountId som tillhör kunden pNr, presentation av kontots saldo samt ränta på pengarna ska genereras.
-        return "lol";
+        for (Customer client : kunder) {
+            if (client.getPnr()== pNr)
+                for (Account account : client.getAllAccounts()) {
+                    if (account.getAcc_num() == accountId) {
+                        String data = account.getAccount();
+                        account.closeCurrentAccount();
+                        client.getAllAccounts().remove(account);
+                        System.out.println("");
+                        return "Account close" + data;
+                    }
+                }
+        }
+        return "Account does not exist ";
     }
     
     public int addCreditAccount(long pNr){
         //Skapar ett kreditkonto till kund med personnummer pNr och returnerar kontonumret som det skapade 
         //kontot fick (alternativt returneras -1 om inget konto skapades)
-        
-        return 1;
+         for (int i = 0; i < kunder.size(); i++) {
+            if (kunder.get(i).getPnr()== pNr) {
+                kunder.get(i).addAccounts(new CreditAccount());
+                return kunder.get(i).getLastAccountNr();
+            }
+        }
+        return -1;
     }
     
     public ArrayList<String> getTransactions(long pNr, int accountId){
-        ArrayList<String> shit = new ArrayList<String>();
-        return shit;
+         for (Customer client : kunder) {
+            if (client.getPnr()== pNr)
+                for (Account account : client.getAllAccounts()) {
+                    if (account.getAcc_num() == accountId) {
+                        return account.getTransactionsList();
+                    }
+                }
+        }
+        return new ArrayList<String>();
     }
     
     

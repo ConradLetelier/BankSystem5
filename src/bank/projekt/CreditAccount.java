@@ -9,7 +9,7 @@ package bank.projekt;
  *
  * @author Micke
  */
-public class CreditAccount{
+public class CreditAccount extends Account{
     private String accountType = "KreditKonto";
     private int kontoNummer;
    
@@ -25,6 +25,11 @@ public class CreditAccount{
         this.interest = interest;
         this.limit = limit;
         this.kontoNummer = kontoNummer;
+        setAcct_type("Creditaccount");
+    }
+    public CreditAccount(){
+        super();
+        setAcct_type("Creditaccount");
     }
 
     public String getAccountType() {
@@ -74,6 +79,17 @@ public class CreditAccount{
     public void setLimit(double limit) {
         this.limit = limit;
     }
+
+    @Override
+    public boolean withdraw(double value) {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+
+    @Override
+    public String toString() {
+        return "CreditAccount{" + "accountType=" + accountType + ", interest=" + interest + ", debt_interest=" + debt_interest + ", limit=" + limit + '}';
+    }
+    
     
     
 }

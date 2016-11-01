@@ -27,9 +27,9 @@ import javafx.stage.Stage;
  *
  * @author Conrad
  */
-public class ChangeController implements Initializable {
+public class WithdrawController implements Initializable {
 
-   
+    
     @FXML
     private Button cancelButton;
 

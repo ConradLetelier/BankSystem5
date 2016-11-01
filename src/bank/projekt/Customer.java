@@ -13,7 +13,11 @@ import java.util.ArrayList;
 public class Customer {
     String name;
     long pNr;
-    public ArrayList<Object> accounts;
+    
+     private ArrayList<Account> accounts;
+    public Customer(){
+        
+    }
     
     public Customer(String name, long pNr){
         this.name = name;
@@ -35,8 +39,20 @@ public class Customer {
     public void setpNr(long pNr) {
         this.pNr = pNr;
     }
+       public String getCustomer(){
+     return "Name: "+getName()+", Personal number: "+ getPnr();
+   }
   
+          public ArrayList<Account> getAllAccounts() {
+     return accounts;
+   }
     
+           public void addAccounts(Account s) {
+     accounts.add(s);
+   }
+             public int getLastAccountNr() {
+     return accounts.get(accounts.size()-1).getAcc_num();
+   }
 
 
 }

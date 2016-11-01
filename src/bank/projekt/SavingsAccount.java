@@ -9,13 +9,13 @@ package bank.projekt;
  *
  * @author Micke
  */
-public class SavingsAccount {
+public class SavingsAccount extends Account{
     
 
     private boolean withdrawn = false;
     private double saldo , interest = 1.01;
     private int kontoNummer;
-    private String accountType = "Sparkonto";
+    private String accountType = "Savingsaccount";
      //Ett sparkonto ska ha ; saldo, interest,kontoNummer, kontoTyp, withdrawn
     public SavingsAccount(int kontoNummer){
         this.saldo = saldo;
@@ -24,9 +24,16 @@ public class SavingsAccount {
         this.accountType = accountType;
         
         this.withdrawn = withdrawn;
+        setAcct_type("Savingsaccount");
         
 
     }
+     public SavingsAccount(){
+
+        super();
+        setAcct_type("Savingsaccount");
+
+          }
 
     public boolean isWithdrawn() {
         return withdrawn;
@@ -71,4 +78,15 @@ public class SavingsAccount {
     public boolean getWithdrawn(){
         return this.withdrawn;
     }
+
+    @Override
+    public boolean withdraw(double value) {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+
+    @Override
+    public String toString() {
+        return "SavingsAccount{" + ", interest=" + interest + ", accountType=" + accountType + '}';
+    }
+    
 }

@@ -33,7 +33,8 @@ import javafx.stage.Stage;
  * @author Conrad
  */
 public class MainpageController implements Initializable {
-
+    public static boolean isSavingsAccount = false;
+    public static boolean isCreditAccount = false;
     @FXML
     private Label labelText;
     @FXML
@@ -49,25 +50,29 @@ public class MainpageController implements Initializable {
     @FXML
     private Button depositButton;
     @FXML
+    private Button infoButton;
+    @FXML
     private TableView<Customer> table1;
     @FXML
-    private TableView<SavingsAccount> table2;
+    private TableView<Account> table2;
     @FXML
-    private TableColumn<SavingsAccount, String> accountTypeColumn;
+    private TableColumn<Account, String> accountTypeColumn;
     @FXML
-    private TableColumn<SavingsAccount, Integer> idColumn;
+    private TableColumn<Account, Integer> idColumn;
     @FXML
-    private TableColumn<SavingsAccount, Double> balanceColumn;
+    private TableColumn<Account, Double> balanceColumn;
     @FXML
     private TableColumn<Customer, String> NameColumn;
     @FXML
     private TableColumn<Customer, Long> pnrColumn;
     @FXML
+    private TableColumn<Account, Integer> withdrawColumn;
+    @FXML
     private TextField nameInputSearch;
 
     //Table data
     public static ObservableList<Customer> data = FXCollections.observableArrayList();
-    public static ObservableList<SavingsAccount> data2 = FXCollections.observableArrayList();
+    public static ObservableList<Account> data2 = FXCollections.observableArrayList();
 
     @FXML
     private void addCustomer(ActionEvent event) throws IOException {
@@ -138,6 +143,36 @@ public class MainpageController implements Initializable {
         stage.showAndWait();
 
     }
+       @FXML
+    private void accountInfo(ActionEvent event) throws IOException {
+      if (!(table2.getSelectionModel().getSelectedIndex() == -1)) {
+        
+        if (table2.getSelectionModel().getSelectedItem().getAcct_type().equals("Savingsaccount")){
+           isSavingsAccount=true;
+       }
+       else{
+           isCreditAccount=true;
+       }
+        
+        Stage stage;
+        Parent root;
+        stage = new Stage();
+        root = FXMLLoader.load(getClass().getResource("AccountInfo.fxml"));
+        stage.setScene(new Scene(root));
+        stage.setTitle("Account Information");
+        stage.initModality(Modality.APPLICATION_MODAL);
+        stage.initOwner(infoButton.getScene().getWindow());
+        stage.showAndWait();
+        isCreditAccount=false;
+        isSavingsAccount=false;
+      }else {
+            labelText.setText("Please choose an account");
+
+            
+        }
+      
+
+    }
 
     @FXML
     private void removeAccount(ActionEvent event) throws IOException {
@@ -156,7 +191,7 @@ public class MainpageController implements Initializable {
 
     @FXML
     private void withdraw(ActionEvent event) throws IOException {
-
+ if (!(table2.getSelectionModel().getSelectedIndex() == -1)){
         Stage stage;
         Parent root;
         stage = new Stage();
@@ -166,6 +201,18 @@ public class MainpageController implements Initializable {
         stage.initModality(Modality.APPLICATION_MODAL);
         stage.initOwner(withdrawButton.getScene().getWindow());
         stage.showAndWait();
+        BankLogic a = new BankLogic();
+       
+       long pnr =BankLogic.kunder.get(table1.getSelectionModel().getSelectedIndex()).getPnr();
+       
+       
+        a.withdraw(pnr, 0, 0);
+ }
+ else {
+            labelText.setText("Please choose an account");
+
+            
+        }
 
     }
 
@@ -186,18 +233,22 @@ public class MainpageController implements Initializable {
 
     @FXML
     public void search(ActionEvent event) {
-        System.out.println("s");
+        
     }
 
     @Override
     public void initialize(URL url, ResourceBundle rb) {
-
+        CreditAccount ad = new CreditAccount();
+        SavingsAccount ab = new SavingsAccount(99);
+        data2.add(ab);
+        data2.add(ad);
         NameColumn.setCellValueFactory(new PropertyValueFactory<Customer, String>("Name"));
         pnrColumn.setCellValueFactory(new PropertyValueFactory<Customer, Long>("pnr"));
-        accountTypeColumn.setCellValueFactory(new PropertyValueFactory<SavingsAccount, String>("accountType"));
-        idColumn.setCellValueFactory(new PropertyValueFactory<SavingsAccount, Integer>("kontoNummer"));
-        balanceColumn.setCellValueFactory(new PropertyValueFactory<SavingsAccount, Double>("saldo"));
-
+        accountTypeColumn.setCellValueFactory(new PropertyValueFactory<Account, String>("accountType"));
+        idColumn.setCellValueFactory(new PropertyValueFactory<Account, Integer>("kontoNummer"));
+        balanceColumn.setCellValueFactory(new PropertyValueFactory<Account, Double>("saldo"));
+        withdrawColumn.setCellValueFactory(new PropertyValueFactory<Account, Integer>("ammountOfWithdraws"));
+        
         table1.setItems(data);
         table2.setItems(data2);
 

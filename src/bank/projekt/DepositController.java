@@ -27,7 +27,7 @@ import javafx.stage.Stage;
  *
  * @author Conrad
  */
-public class ComfirmController implements Initializable {
+public class DepositController implements Initializable {
 
     
     @FXML
