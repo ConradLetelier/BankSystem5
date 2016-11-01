@@ -74,6 +74,7 @@ public class BankLogic {
                     e.name = name;
                     
                     return true;
+                    
                 }
             }
         }
@@ -98,7 +99,7 @@ public class BankLogic {
         return null;
     }
     
-    public int addSavingsAccount(long pNr){
+    public static int addSavingsAccount(long pNr){
         //Skapar ett konto till kund med personnummer pNr, returnerar kontonumret som 
         //det skapade kontot fick alternativt returneras –1 om inget konto skapades.
              for (int i = 0; i < kunder.size(); i++) {
@@ -116,7 +117,7 @@ public class BankLogic {
            for (Customer client : kunder) {
             if (client.getPnr()== pNr) {
                 for (Account account : client.getAllAccounts()) {
-                    if (account.getAcc_num() == accountId) {
+                    if (account.getAccountNumber()== accountId) {
                         return account.getAccount();
                     }
                 }
@@ -130,7 +131,7 @@ public class BankLogic {
          for (Customer person : kunder) {
             if (person.getPnr()== pNr) {
                 for (Account account : person.getAllAccounts()) {
-                    if (account.getAcc_num() == accountId) {
+                    if (account.getAccountNumber()== accountId) {
                         account.deposit(amount);
                         return true;
                     }
@@ -146,7 +147,7 @@ public class BankLogic {
          for (Customer client : kunder) {
             if (client.getPnr()== pNr) {
                 for (Account account : client.getAllAccounts()) {
-                    if (account.getAcc_num() == accountId) {
+                    if (account.getAccountNumber()== accountId) {
                         account.setAmmountOfWithdraws(account.getAmmountOfWithdraws()+1);
                         return account.withdraw(amount);
                     }
@@ -161,7 +162,7 @@ public class BankLogic {
         for (Customer client : kunder) {
             if (client.getPnr()== pNr)
                 for (Account account : client.getAllAccounts()) {
-                    if (account.getAcc_num() == accountId) {
+                    if (account.getAccountNumber()== accountId) {
                         String data = account.getAccount();
                         account.closeCurrentAccount();
                         client.getAllAccounts().remove(account);
@@ -189,13 +190,22 @@ public class BankLogic {
          for (Customer client : kunder) {
             if (client.getPnr()== pNr)
                 for (Account account : client.getAllAccounts()) {
-                    if (account.getAcc_num() == accountId) {
+                    if (account.getAccountNumber()== accountId) {
                         return account.getTransactionsList();
                     }
                 }
         }
         return new ArrayList<String>();
     }
+     public static void InitilizeList(){
+          
+      
+        for(int i = 0; i < BankLogic.kunder.size();i++){
+            MainpageController.data.add(BankLogic.kunder.get(i));
+            
+        }
+           
+        }
     
     
     //Programmet ska göras så stabilt som möjligt, även om användaren missförstår instruktionerna ska han/hon inte lyckas krascha programmet i första taget. 

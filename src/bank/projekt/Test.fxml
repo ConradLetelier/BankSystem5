@@ -66,8 +66,8 @@
                </font></Label>
             <Separator prefWidth="200.0" />
             <Button fx:id="infoButton" layoutX="12.0" layoutY="212.0" mnemonicParsing="false" onAction="#accountInfo" prefWidth="160.0" text="Account Info" />
-            <Button mnemonicParsing="false" prefWidth="160.0" text="Add new savings account" />
-            <Button mnemonicParsing="false" prefWidth="160.0" text="Add new credit account" />
+            <Button fx:id="addSaveAccButton" mnemonicParsing="false" onAction="#addSaveAcc" prefWidth="160.0" text="Add new savings account" />
+            <Button fx:id="addCredAccButton" mnemonicParsing="false" onAction="#addCredAcc" prefWidth="160.0" text="Add new credit account" />
             <Button fx:id="removeAccountButton" mnemonicParsing="false" onAction="#removeAccount" prefWidth="160.0" text="Remove account" />
             <Button fx:id="withdrawButton" mnemonicParsing="false" onAction="#withdraw" prefWidth="160.0" text="Withdraw" />
             <Button fx:id="depositButton" mnemonicParsing="false" onAction="#deposit" prefWidth="160.0" text="Deposit" />

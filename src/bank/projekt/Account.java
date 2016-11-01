@@ -74,7 +74,7 @@ public abstract class Account {
         transactionsList.add("Time: " + date.toString() + " Deposit value: " + value + " New balance: " + balance);
         System.out.println("New balance: " + balance + "\n");
     }
-    public int getAcc_num() {
+    public int getAccountNumber() {
         return accountNumber;
     }
     public static void setInterestRate(int newInterestRate) {

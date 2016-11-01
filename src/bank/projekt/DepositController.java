@@ -21,6 +21,7 @@ import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.ListView;
+import javafx.scene.control.TextField;
 import javafx.stage.Stage;
 
 /**
@@ -29,15 +30,26 @@ import javafx.stage.Stage;
  */
 public class DepositController implements Initializable {
 
-    
+    @FXML
+    private Button depositButton;
     @FXML
     private Button cancelButton;
+    @FXML
+    private TextField amountField;
 
     @FXML
     private void cancel(ActionEvent event) throws IOException {
 
         Stage stage = (Stage) cancelButton.getScene().getWindow();
 
+        stage.close();
+
+    }
+        @FXML
+    private void deposit(ActionEvent event) throws IOException {
+
+        MainpageController.depositamount = Integer.parseInt(amountField.getText());
+        Stage stage = (Stage) depositButton.getScene().getWindow();
         stage.close();
 
     }

@@ -11,19 +11,20 @@ package bank.projekt;
  */
 public class SavingsAccount extends Account{
     
-
+     private boolean  firstWithdrawal=false;
+     
     private boolean withdrawn = false;
-    private double saldo , interest = 1.01;
-    private int kontoNummer;
+    private double  interest = 1.01;
     private String accountType = "Savingsaccount";
      //Ett sparkonto ska ha ; saldo, interest,kontoNummer, kontoTyp, withdrawn
-    public SavingsAccount(int kontoNummer){
-        this.saldo = saldo;
-     
-        this.kontoNummer = kontoNummer;
-        this.accountType = accountType;
-        
-        this.withdrawn = withdrawn;
+    
+        public SavingsAccount(String accountType, double balance) { 
+//parameter från super class Account
+           super (accountType, balance);
+            firstWithdrawal=false;
+            transactionsList.add("Savings account named: " + accountType + " was created: " + date.toString() + " Balance: " + balance);
+
+      
         setAcct_type("Savingsaccount");
         
 
@@ -34,6 +35,38 @@ public class SavingsAccount extends Account{
         setAcct_type("Savingsaccount");
 
           }
+        public void closeCurrentAccount() {
+
+        System.out.println( "Ending balance: " + balance +  " Interest: " + balance*0.01);
+
+        }
+        public boolean withdraw(double value) {
+            if(balance >= value){
+              if(firstWithdrawal==false){
+                balance-=value;
+                System.out.println("Cash value out: " + value);
+                System.out.println("New balance: " + balance + "\n");
+                transactionsList.add("Time: " + date.toString() + " Withdrawal: " + value + " New balance: " + balance);
+                firstWithdrawal=true;
+                return true;
+              }else{
+                if (balance>=1.02*value){
+                  balance-=1.02*value;
+                  System.out.println("Cash value out: " + value);
+                  System.out.println("New balance: " + balance + "\n");
+                  System.out.println(" some sum of amount money has been debited from your account");
+        transactionsList.add("Time: " + date.toString() + " Withdrawal: " + value + " New balance: " + balance);
+        return true;
+                } else{
+                  System.out.println("Not enough balance amount. Deposit some value.\n");
+                }
+              }
+            }else {
+              System.out.println("Not enough balance amount. Deposit some value.\n");
+              return false;
+            }
+            return false;
+          }
 
     public boolean isWithdrawn() {
         return withdrawn;
@@ -43,13 +76,7 @@ public class SavingsAccount extends Account{
         this.withdrawn = withdrawn;
     }
 
-    public double getSaldo() {
-        return saldo;
-    }
-
-    public void setSaldo(double saldo) {
-        this.saldo = saldo;
-    }
+   
 
     public double getInterest() {
         return interest;
@@ -59,13 +86,7 @@ public class SavingsAccount extends Account{
         this.interest = interest;
     }
 
-    public int getKontoNummer() {
-        return kontoNummer;
-    }
-
-    public void setKontoNummer(int kontoNummer) {
-        this.kontoNummer = kontoNummer;
-    }
+  
 
     public String getAccountType() {
         return accountType;
@@ -79,10 +100,7 @@ public class SavingsAccount extends Account{
         return this.withdrawn;
     }
 
-    @Override
-    public boolean withdraw(double value) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
-    }
+ 
 
     @Override
     public String toString() {

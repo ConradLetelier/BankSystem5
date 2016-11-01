@@ -33,12 +33,19 @@ import javafx.stage.Stage;
  * @author Conrad
  */
 public class MainpageController implements Initializable {
+
     public static boolean isSavingsAccount = false;
     public static boolean isCreditAccount = false;
+    public static int withdrawAmount = 0;
+    public static int depositamount = 0;
     @FXML
     private Label labelText;
     @FXML
     private Button regButton;
+    @FXML
+    private Button addSaveAccButton;
+    @FXML
+    private Button addCredAccButton;
     @FXML
     private Button removeCustomerButton;
     @FXML
@@ -76,10 +83,9 @@ public class MainpageController implements Initializable {
 
     @FXML
     private void addCustomer(ActionEvent event) throws IOException {
-
+        
         Stage stage;
         Parent root;
-
         stage = new Stage();
         root = FXMLLoader.load(getClass().getResource("RegCustomer.fxml"));
         stage.setScene(new Scene(root));
@@ -88,11 +94,8 @@ public class MainpageController implements Initializable {
         stage.initOwner(regButton.getScene().getWindow());
         stage.showAndWait();
 
-        Parent root2 = FXMLLoader.load(getClass().getResource("Test.fxml"));
-        Scene s = new Scene(root2);
-        Stage stg = (Stage) ((Node) event.getSource()).getScene().getWindow();
-        stg.setScene(s);
-        stg.show();
+
+        
 
     }
 
@@ -116,19 +119,39 @@ public class MainpageController implements Initializable {
                 data.remove(table1.getSelectionModel().getSelectedIndex());
             }
             removeChecker = false;
-            Parent root2 = FXMLLoader.load(getClass().getResource("Test.fxml"));
-            Scene s = new Scene(root2);
-            Stage stg = (Stage) ((Node) event.getSource()).getScene().getWindow();
-            stg.setScene(s);
-            stg.show();
+
 
         } else {
             labelText.setText("Please choose a customer");
 
-            System.out.println("hh");
+ 
         }
     }
+    @FXML
+    private void addCredAcc(ActionEvent event){
+        
+    }
+    @FXML
+    private void addSaveAcc(ActionEvent event) throws IOException{
+        if (!(table1.getSelectionModel().getSelectedIndex() == -1)){
+           // BankLogic.addSavingsAccount(pnrColumn.getCellData(table1.getSelectionModel().getSelectedIndex()));
+           //BankLogic.addSavingsAccount(33);
+            System.out.println(BankLogic.addSavingsAccount(33));
+           System.out.println((pnrColumn.getCellData(table1.getSelectionModel().getSelectedIndex())));
+//         Parent root2 = FXMLLoader.load(getClass().getResource("Test.fxml"));
+//            Scene s = new Scene(root2);
+//            Stage stg = (Stage) ((Node) event.getSource()).getScene().getWindow();
+//            stg.setScene(s);
+//            stg.show();
+        }
+            else {
+            labelText.setText("Please choose a customer");
 
+ 
+        }
+       
+        
+    }
     @FXML
     private void changeCustomer(ActionEvent event) throws IOException {
 
@@ -143,34 +166,32 @@ public class MainpageController implements Initializable {
         stage.showAndWait();
 
     }
-       @FXML
+
+    @FXML
     private void accountInfo(ActionEvent event) throws IOException {
-      if (!(table2.getSelectionModel().getSelectedIndex() == -1)) {
-        
-        if (table2.getSelectionModel().getSelectedItem().getAcct_type().equals("Savingsaccount")){
-           isSavingsAccount=true;
-       }
-       else{
-           isCreditAccount=true;
-       }
-        
-        Stage stage;
-        Parent root;
-        stage = new Stage();
-        root = FXMLLoader.load(getClass().getResource("AccountInfo.fxml"));
-        stage.setScene(new Scene(root));
-        stage.setTitle("Account Information");
-        stage.initModality(Modality.APPLICATION_MODAL);
-        stage.initOwner(infoButton.getScene().getWindow());
-        stage.showAndWait();
-        isCreditAccount=false;
-        isSavingsAccount=false;
-      }else {
+        if (!(table2.getSelectionModel().getSelectedIndex() == -1)) {
+
+            if (table2.getSelectionModel().getSelectedItem().getAcct_type().equals("Savingsaccount")) {
+                isSavingsAccount = true;
+            } else {
+                isCreditAccount = true;
+            }
+
+            Stage stage;
+            Parent root;
+            stage = new Stage();
+            root = FXMLLoader.load(getClass().getResource("AccountInfo.fxml"));
+            stage.setScene(new Scene(root));
+            stage.setTitle("Account Information");
+            stage.initModality(Modality.APPLICATION_MODAL);
+            stage.initOwner(infoButton.getScene().getWindow());
+            stage.showAndWait();
+            isCreditAccount = false;
+            isSavingsAccount = false;
+        } else {
             labelText.setText("Please choose an account");
 
-            
         }
-      
 
     }
 
@@ -186,69 +207,79 @@ public class MainpageController implements Initializable {
         stage.initModality(Modality.APPLICATION_MODAL);
         stage.initOwner(removeAccountButton.getScene().getWindow());
         stage.showAndWait();
-
+        BankLogic.kunder.get(table1.getSelectionModel().getSelectedIndex()).getName();
     }
 
     @FXML
     private void withdraw(ActionEvent event) throws IOException {
- if (!(table2.getSelectionModel().getSelectedIndex() == -1)){
-        Stage stage;
-        Parent root;
-        stage = new Stage();
-        root = FXMLLoader.load(getClass().getResource("Withdraw.fxml"));
-        stage.setScene(new Scene(root));
-        stage.setTitle("Withdraw");
-        stage.initModality(Modality.APPLICATION_MODAL);
-        stage.initOwner(withdrawButton.getScene().getWindow());
-        stage.showAndWait();
-        BankLogic a = new BankLogic();
-       
-       long pnr =BankLogic.kunder.get(table1.getSelectionModel().getSelectedIndex()).getPnr();
-       
-       
-        a.withdraw(pnr, 0, 0);
- }
- else {
+        if (!(table2.getSelectionModel().getSelectedIndex() == -1)) {
+            Stage stage;
+            Parent root;
+            stage = new Stage();
+            root = FXMLLoader.load(getClass().getResource("Withdraw.fxml"));
+            stage.setScene(new Scene(root));
+            stage.setTitle("Withdraw");
+            stage.initModality(Modality.APPLICATION_MODAL);
+            stage.initOwner(withdrawButton.getScene().getWindow());
+            stage.showAndWait();
+            BankLogic a = new BankLogic();
+
+            long pnr = BankLogic.kunder.get(table1.getSelectionModel().getSelectedIndex()).getPnr();
+            int accNr = withdrawColumn.getCellData(table2.getSelectionModel().getSelectedIndex());
+
+            a.withdraw(pnr, accNr, withdrawAmount);
+            withdrawAmount = 0;
+            
+        } else {
             labelText.setText("Please choose an account");
 
-            
         }
 
     }
 
     @FXML
     private void deposit(ActionEvent event) throws IOException {
+        if (!(table2.getSelectionModel().getSelectedIndex() == -1)) {
+            Stage stage;
+            Parent root;
+            stage = new Stage();
+            root = FXMLLoader.load(getClass().getResource("Deposit.fxml"));
+            stage.setScene(new Scene(root));
+            stage.setTitle("Deposit");
+            stage.initModality(Modality.APPLICATION_MODAL);
+            stage.initOwner(depositButton.getScene().getWindow());
+            stage.showAndWait();
 
-        Stage stage;
-        Parent root;
-        stage = new Stage();
-        root = FXMLLoader.load(getClass().getResource("Deposit.fxml"));
-        stage.setScene(new Scene(root));
-        stage.setTitle("Deposit");
-        stage.initModality(Modality.APPLICATION_MODAL);
-        stage.initOwner(depositButton.getScene().getWindow());
-        stage.showAndWait();
+            BankLogic a = new BankLogic();
+
+            long pnr = pnrColumn.getCellData(table1.getSelectionModel().getSelectedIndex());
+            int accNr = withdrawColumn.getCellData(table2.getSelectionModel().getSelectedIndex());
+
+            a.deposit(pnr, accNr, depositamount);
+            depositamount = 0;
+        }
+        {
+            labelText.setText("Please choose an account");
+
+        }
 
     }
 
     @FXML
-    public void search(ActionEvent event) {
+    public void search(ActionEvent event) throws IOException {
         
     }
 
     @Override
     public void initialize(URL url, ResourceBundle rb) {
-        CreditAccount ad = new CreditAccount();
-        SavingsAccount ab = new SavingsAccount(99);
-        data2.add(ab);
-        data2.add(ad);
+       
         NameColumn.setCellValueFactory(new PropertyValueFactory<Customer, String>("Name"));
         pnrColumn.setCellValueFactory(new PropertyValueFactory<Customer, Long>("pnr"));
         accountTypeColumn.setCellValueFactory(new PropertyValueFactory<Account, String>("accountType"));
-        idColumn.setCellValueFactory(new PropertyValueFactory<Account, Integer>("kontoNummer"));
-        balanceColumn.setCellValueFactory(new PropertyValueFactory<Account, Double>("saldo"));
+        idColumn.setCellValueFactory(new PropertyValueFactory<Account, Integer>("accountNumber"));
+        balanceColumn.setCellValueFactory(new PropertyValueFactory<Account, Double>("balance"));
         withdrawColumn.setCellValueFactory(new PropertyValueFactory<Account, Integer>("ammountOfWithdraws"));
-        
+        BankLogic.InitilizeList();
         table1.setItems(data);
         table2.setItems(data2);
 

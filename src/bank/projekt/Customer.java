@@ -51,7 +51,7 @@ public class Customer {
      accounts.add(s);
    }
              public int getLastAccountNr() {
-     return accounts.get(accounts.size()-1).getAcc_num();
+     return accounts.get(accounts.size()-1).getAccountNumber();
    }
 
 
