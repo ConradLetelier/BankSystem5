@@ -24,8 +24,8 @@
             <Font name="System Bold" size="14.0" />
          </font>
       </Label>
-      <TextField layoutX="162.0" layoutY="223.0" prefHeight="25.0" prefWidth="159.0" />
-      <TextField layoutX="162.0" layoutY="354.0" prefHeight="25.0" prefWidth="159.0" />
+      <TextField fx:id="newfirstname" layoutX="162.0" layoutY="223.0" prefHeight="25.0" prefWidth="159.0" />
+      <TextField fx:id="newpn" layoutX="162.0" layoutY="354.0" prefHeight="25.0" prefWidth="159.0" />
       <Label layoutX="165.0" layoutY="193.0" text="New First Name:">
          <font>
             <Font size="14.0" />
@@ -37,8 +37,8 @@
          </font>
       </Label>
       <Separator layoutY="173.0" prefHeight="0.0" prefWidth="536.0" />
-      <Button layoutX="162.0" layoutY="391.0" mnemonicParsing="false" prefWidth="70.0" text="Register" />
-      <Button layoutX="251.0" layoutY="391.0" mnemonicParsing="false" prefWidth="70.0" text="Clear" />
+      <Button fx:id="changeregister" layoutX="162.0" layoutY="391.0" mnemonicParsing="false" onAction="#handlechangeregister" prefWidth="70.0" text="Register" />
+      <Button layoutX="251.0" layoutY="391.0" mnemonicParsing="false" onAction="#clear" prefWidth="70.0" text="Clear" />
       <Button fx:id="cancelButton" layoutX="21.0" layoutY="451.0" mnemonicParsing="false" onAction="#cancel" prefWidth="60.0" text="Cancel" />
       <Separator layoutY="129.0" prefHeight="3.0" prefWidth="527.0" />
       <Label layoutX="165.0" layoutY="258.0" text="New Last Name:">
@@ -46,6 +46,6 @@
             <Font size="14.0" />
          </font>
       </Label>
-      <TextField layoutX="162.0" layoutY="288.0" prefHeight="25.0" prefWidth="159.0" />
+      <TextField fx:id="newlastname" layoutX="162.0" layoutY="288.0" prefHeight="25.0" prefWidth="159.0" />
    </children>
 </AnchorPane>

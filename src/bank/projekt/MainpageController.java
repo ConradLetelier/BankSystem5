@@ -180,10 +180,14 @@ public class MainpageController implements Initializable {
         stage.initModality(Modality.APPLICATION_MODAL);
         stage.initOwner(changeCustomerButton.getScene().getWindow());
         stage.showAndWait();
+
 }
   else {
             labelText.setText("Please choose a customer");
     }
+
+        
+
 
     }
 

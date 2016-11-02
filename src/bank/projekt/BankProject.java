@@ -454,11 +454,6 @@ public class BankProject extends Application {
      */
     public static void main(String[] args) {
        launch(args);
-//    Customer s = new Customer("frank", 33);
-//    SavingsAccount a = new SavingsAccount();
-//    Customer.accounts.add(a);
-  
-    
-    
+   
 }
 }

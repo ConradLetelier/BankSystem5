@@ -13,8 +13,7 @@ import java.util.ArrayList;
 public class Customer {
     String name;
     long pNr;
-    
-     public static ArrayList<Account> accounts;
+     private ArrayList<Account> accounts;
      
     public Customer(){
         

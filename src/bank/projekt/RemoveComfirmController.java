@@ -38,10 +38,9 @@ public class RemoveComfirmController implements Initializable {
 
     @FXML
     private void handleyesremove(ActionEvent event) {
-        removeChecker=true;
+         removeChecker = true;
          Stage stage = (Stage) yesremove.getScene().getWindow();
-
-        stage.close();
+         stage.close();
     
     }
 
