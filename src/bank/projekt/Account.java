@@ -34,7 +34,7 @@ public abstract class Account {
     }
 //konstruktor
     public Account() {
-        accountNumber = accountNumberCounter;
+       accountNumber = accountNumberCounter;
           accountNumberCounter++;
     }
 

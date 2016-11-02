@@ -104,8 +104,10 @@ public class BankLogic {
         //det skapade kontot fick alternativt returneras –1 om inget konto skapades.
              for (int i = 0; i < kunder.size(); i++) {
             if (kunder.get(i).getPnr()== pNr) {
+               
                 kunder.get(i).addAccounts(new SavingsAccount());
-                return kunder.get(i).getLastAccountNr();
+              return kunder.get(i).getLastAccountNr();
+               
             }
         }
         return -1;
@@ -174,7 +176,7 @@ public class BankLogic {
         return "Account does not exist ";
     }
     
-    public int addCreditAccount(long pNr){
+    public static int addCreditAccount(long pNr){
         //Skapar ett kreditkonto till kund med personnummer pNr och returnerar kontonumret som det skapade 
         //kontot fick (alternativt returneras -1 om inget konto skapades)
          for (int i = 0; i < kunder.size(); i++) {

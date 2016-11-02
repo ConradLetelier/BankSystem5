@@ -14,7 +14,8 @@ public class Customer {
     String name;
     long pNr;
     
-     private ArrayList<Account> accounts;
+     public static ArrayList<Account> accounts;
+     
     public Customer(){
         
     }
@@ -36,7 +37,7 @@ public class Customer {
         return pNr;
     }
 
-    public void setpNr(long pNr) {
+    public void setPnr(long pNr) {
         this.pNr = pNr;
     }
        public String getCustomer(){

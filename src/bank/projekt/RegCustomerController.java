@@ -61,26 +61,36 @@ public class RegCustomerController implements Initializable {
 
     @FXML
     private void handleregister(ActionEvent event) throws IOException {
+        String name = capitalize.Sortera(txtfirstname);
+        
+        txtfirstname.setText(name);
+        name = capitalize.Sortera(txtlastname);
+        txtlastname.setText(name);
+        
+        name = capitalize.SorteraNummer(txtpn);
+        txtpn.setText(name);
+        
+        
     if(txtfirstname.getText().isEmpty() || txtlastname.getText().isEmpty() || txtpn.getText().isEmpty()){
     notification.setText("Fill all the values");
     
     
     }
     else{
-       
-        
-        BankLogic.addCustomer(txtfirstname.getText(), Integer.parseInt(txtpn.getText()));
-        
 
-            Customer listCust = new Customer(txtfirstname.getText(), Integer.parseInt(txtpn.getText()));
-            data.add(listCust);
-
+        BankLogic.addCustomer(txtfirstname.getText() + " " + txtlastname.getText(), Integer.parseInt(txtpn.getText()));
         
+          Customer listCust = new Customer(txtfirstname.getText() + " " + txtlastname.getText(), Integer.parseInt(txtpn.getText()));
+          data.add(listCust);
+          
+            
+
+        Stage stage = (Stage) cancelButton.getScene().getWindow();
+    stage.close();
         
            
     }
-    Stage stage = (Stage) cancelButton.getScene().getWindow();
-    stage.close();
+    
     
     }
 
@@ -102,3 +112,76 @@ public class RegCustomerController implements Initializable {
     }
 
 }
+//public class RegCustomerController implements Initializable {
+//
+//    @FXML
+//    private Button cancelButton;
+//    @FXML
+//    private TextField txtfirstname;
+//    @FXML
+//    private TextField txtpn;
+//    @FXML
+//    private Button register;
+//    @FXML
+//    private Button clear;
+//    @FXML
+//    private TextField txtlastname;
+//    @FXML
+//    private Label notification;
+//
+//    private void cancel(ActionEvent event) throws IOException {
+//
+//        Stage stage = (Stage) cancelButton.getScene().getWindow();
+//
+//        stage.close();
+//
+//    }
+//
+//    @Override
+//    public void initialize(URL url, ResourceBundle rb) {
+//        // TODO
+//    }
+//
+//    @FXML
+//    private void handleregister(ActionEvent event) throws IOException {
+//    if(txtfirstname.getText().isEmpty() || txtlastname.getText().isEmpty() || txtpn.getText().isEmpty()){
+//    notification.setText("Fill all the values");
+//    
+//    
+//    }
+//    else{
+//       
+//        
+//        BankLogic.addCustomer(txtfirstname.getText(), Integer.parseInt(txtpn.getText()));
+//        
+//
+//            Customer listCust = new Customer(txtfirstname.getText(), Integer.parseInt(txtpn.getText()));
+//            data.add(listCust);
+//
+//        
+//        
+//           
+//    }
+//    Stage stage = (Stage) cancelButton.getScene().getWindow();
+//    stage.close();
+//    
+//    }
+//
+//    @FXML
+//    private void handleclear(ActionEvent event) {
+//    txtfirstname.setText("");
+//    txtlastname.setText("");
+//    txtpn.setText("");
+//    
+//    }
+//
+//    @FXML
+//    private void handelcancel(ActionEvent event) throws IOException {
+//   
+//           Stage stage = (Stage) cancelButton.getScene().getWindow();
+//
+//        stage.close();
+//    
+//    }
+//
+//}

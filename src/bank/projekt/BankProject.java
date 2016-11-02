@@ -5,6 +5,7 @@
  */
 package bank.projekt;
 
+import java.lang.reflect.InvocationTargetException;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 import javafx.application.Application;
@@ -453,8 +454,11 @@ public class BankProject extends Application {
      */
     public static void main(String[] args) {
        launch(args);
+//    Customer s = new Customer("frank", 33);
+//    SavingsAccount a = new SavingsAccount();
+//    Customer.accounts.add(a);
+  
     
-        
-    }
     
+}
 }

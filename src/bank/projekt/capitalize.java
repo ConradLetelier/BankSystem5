@@ -55,17 +55,24 @@ public class capitalize {
     }
     
     public static String Sortera(TextField box1){
-        Pattern p = Pattern.compile("([\\w])\\1\\1");
+        
             
             String toUse = box1.getText();
             toUse = toUse.replaceAll("[^a-zA-Z -]", "");
             
            
             toUse = toUse.trim().replaceAll(" +", " ");
-            
-            toUse = bank.projekt.capitalize.capitalize(toUse);
+       
             return toUse;
 
+    }
+    
+    public static String SorteraNummer(TextField box2){
+        String toUse = box2.getText();
+        toUse = toUse.replaceAll("[^0-9]", "");
+        
+        toUse = toUse.trim().replaceAll(" +", "");
+        return toUse;
     }
     
     public static void SetButtons(TextField box1, Button confirmed1, Button confirmed2, Label errorLabel2, String button){

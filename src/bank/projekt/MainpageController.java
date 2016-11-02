@@ -129,7 +129,22 @@ public class MainpageController implements Initializable {
     }
     @FXML
     private void addCredAcc(ActionEvent event){
-        
+        if (!(table1.getSelectionModel().getSelectedIndex() == -1)){
+           // BankLogic.addSavingsAccount(pnrColumn.getCellData(table1.getSelectionModel().getSelectedIndex()));
+           //BankLogic.addSavingsAccount(33);
+            System.out.println(BankLogic.addCreditAccount(33));
+           System.out.println((pnrColumn.getCellData(table1.getSelectionModel().getSelectedIndex())));
+//         Parent root2 = FXMLLoader.load(getClass().getResource("Test.fxml"));
+//            Scene s = new Scene(root2);
+//            Stage stg = (Stage) ((Node) event.getSource()).getScene().getWindow();
+//            stg.setScene(s);
+//            stg.show();
+        }
+            else {
+            labelText.setText("Please choose a customer");
+
+ 
+        }
     }
     @FXML
     private void addSaveAcc(ActionEvent event) throws IOException{
@@ -155,6 +170,7 @@ public class MainpageController implements Initializable {
     @FXML
     private void changeCustomer(ActionEvent event) throws IOException {
 
+   if (!(table1.getSelectionModel().getSelectedIndex() == -1)){
         Stage stage;
         Parent root;
         stage = new Stage();
@@ -164,6 +180,10 @@ public class MainpageController implements Initializable {
         stage.initModality(Modality.APPLICATION_MODAL);
         stage.initOwner(changeCustomerButton.getScene().getWindow());
         stage.showAndWait();
+}
+  else {
+            labelText.setText("Please choose a customer");
+    }
 
     }
 
