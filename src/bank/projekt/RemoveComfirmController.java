@@ -5,6 +5,7 @@
  */
 package bank.projekt;
 
+import static bank.projekt.MainpageController.accountnumber;
 import java.net.URL;
 import java.util.ResourceBundle;
 import javafx.event.ActionEvent;
@@ -38,15 +39,39 @@ public class RemoveComfirmController implements Initializable {
 
     @FXML
     private void handleyesremove(ActionEvent event) {
-         removeChecker = true;
-         Stage stage = (Stage) yesremove.getScene().getWindow();
-         stage.close();
+        
+        if(MainpageController.removeAction.equals("Remove Account")){
+        try{
+            
+        
+        BankLogic.closeAccount(MainpageController.pNr, MainpageController.accountnumber);
+        }
+        catch(Exception e){
+            System.out.println("No account to close");
+        }
+        MainpageController.removeAction = "";
+        Stage stage = (Stage) yesremove.getScene().getWindow();
+
+        stage.close();
+        }
+        
+        if(MainpageController.removeAction.equals("Remove Customer")){
+            
+            BankLogic.removeCustomer(MainpageController.pNr);
+            removeChecker=true;
+            MainpageController.removeAction = "";
+            Stage stage = (Stage) yesremove.getScene().getWindow();
+
+            stage.close();
+        }
+        
+         
     
     }
 
     @FXML
     private void handlecancel(ActionEvent event) {
-        
+        MainpageController.removeAction = "";
          Stage stage = (Stage) cancel.getScene().getWindow();
 
         stage.close();

@@ -9,7 +9,7 @@ public abstract class Account {
     //skapa object av class Date
     static Date date = new Date();
     //instans variable
-    protected double balance;
+    protected double balance = 900;
     private String acct_type;
     private int accountNumber;
     private static int interestRate = 1;
@@ -17,13 +17,15 @@ public abstract class Account {
     protected int ammountOfWithdraws =0;
 
     //instance variable av typ String som hÃ¥ller en list av transaction
-       protected ArrayList<String> transactionsList;
+       protected ArrayList<String> transactionsList = new ArrayList<String>();
   //abstact method som Ã¤r tom
     public abstract boolean withdraw(double value);
 
     //konstruktor med arrayList som parameter
     public Account(ArrayList<String> transactionsList) {
         this.transactionsList = transactionsList;
+        
+        
     }
 //konstruktor
     public Account(String accountType, double balance) {
@@ -34,7 +36,8 @@ public abstract class Account {
     }
 //konstruktor
     public Account() {
-       accountNumber = accountNumberCounter;
+        
+        accountNumber = accountNumberCounter;
           accountNumberCounter++;
     }
 
@@ -70,9 +73,9 @@ public abstract class Account {
     }
     public void deposit(double value) {
         balance += value;
-        System.out.println("Deposit: " + value);
-        transactionsList.add("Time: " + date.toString() + " Deposit value: " + value + " New balance: " + balance);
-        System.out.println("New balance: " + balance + "\n");
+        
+        transactionsList.add("Time: " + date.toString() + "\nDeposit: " + value + "kr. New balance: " + balance + " kr.");
+        
     }
     public int getAccountNumber() {
         return accountNumber;
@@ -86,13 +89,13 @@ public abstract class Account {
     public double calculate_MonthlyInterest() {
         double month_Interest = balance * interestRate / 12;
         balance += month_Interest;
-        System.out.println("Your interest rate is: " + balance);
+       
         return month_Interest;
     }
 
-    public String getAccount() {
-        return "Account type: " + acct_type + ", Account number: " + accountNumber + ", Balance: " + balance
-                + ", Interest rate: " + interestRate;
+    public String getAccount() { //kontonummer, saldo, kontotyp, räntesats)
+        return acct_type + "(KontoNummer: " + accountNumber + ", Saldo: " + balance + " kr, "
+                + "Ränta: " + interestRate + "%) ";
     }
     
     public String toString() {
@@ -104,8 +107,54 @@ public abstract class Account {
         return info;
     }
 
-    public void closeCurrentAccount() {
-        // TODO Auto-generated method stub
+    public static String closeCurrentAccount(Account acc) {
+        String SomethingReturn = "";
+        System.out.println("Your saldo when you had no interest applied, was: " + acc.getBalance() + " kr.");
+        if(acc instanceof CreditAccount){
+            //presentation av kontots saldo samt ränta på pengarna ska genereras.
+            
+            //number is the Interest rate
+            double number = (acc.getBalance() < 0) ? acc.getBalance()*1.07 : acc.getBalance()*1.005;
+            
+            
+            //roundOff is to calculate the total interest
+            double roundOff;
+
+            //ToReturn is what you should return
+ 
+            
+            if(acc.getBalance() < 0){
+                System.out.println("Your total interest is: -" + (acc.getBalance() - acc.getBalance()*1.07) + " kr.");
+                SomethingReturn += "Your interest is: -" + (acc.getBalance() - acc.getBalance()*1.07) + " kr.";
+                
+            }
+            else{
+                roundOff = Math.round(((acc.getBalance()*1.005) - acc.getBalance()) * 100.0) / 100.0;
+                System.out.println("Your total interest is: " + roundOff + " kr.");
+                SomethingReturn += "Your interest is: " + roundOff + " kr.";
+            }
+            roundOff = Math.round(number * 100.0) / 100.0;
+            System.out.println("Your saldo when interest was applied on this account is: " + (roundOff) + " kr.");
+            SomethingReturn += " Your total Saldo upon closure is : " + roundOff + " kr.";
+            
+            return SomethingReturn;
+            
+        }
+        if(acc instanceof SavingsAccount){
+            
+            
+            System.out.println("Your total interest is: " + ((acc.getBalance()*1.01) - acc.getBalance()) + " kr.");
+            
+            SomethingReturn += "Your total interest is: " + ((acc.getBalance()*1.01) - acc.getBalance()) + " kr.";
+            
+            System.out.println("Your saldo when interest was applied on this account is: " +  acc.getBalance()*1.01 + " kr.");
+            
+            SomethingReturn += " Your total Saldo upon closure is : " + acc.getBalance()*1.01 + " kr.";
+            
+            
+        }
+        
+        return SomethingReturn;
 
     }
 
@@ -117,6 +166,9 @@ public abstract class Account {
         this.ammountOfWithdraws = ammountOfWithdraws;
     }
     
+    public String specialtoString(){
+        return "temp";
+    }
   
 
 }

@@ -5,6 +5,7 @@
  */
 package bank.projekt;
 
+import static bank.projekt.MainpageController.accountnumber;
 import java.io.IOException;
 import java.net.URL;
 import java.util.ResourceBundle;
@@ -47,8 +48,24 @@ public class DepositController implements Initializable {
     }
         @FXML
     private void deposit(ActionEvent event) throws IOException {
+        
+        try{
+            amountField.setText(amountField.getText().replaceAll("[^0-9]", ""));
+            if(amountField.getText().length() == 0){
+                throw new Exception();
+            }
+        }
+        catch(Exception e){
+            System.err.println("That is not a valid input, please try again.");
+        }
 
-        MainpageController.depositamount = Integer.parseInt(amountField.getText());
+        MainpageController.depositamount = Double.parseDouble(amountField.getText());
+        try{
+            BankLogic.deposit(MainpageController.pNr, accountnumber, MainpageController.depositamount);
+        }
+        catch(Exception e){
+            System.out.println(e);
+        }
         Stage stage = (Stage) depositButton.getScene().getWindow();
         stage.close();
 

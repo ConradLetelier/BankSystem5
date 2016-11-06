@@ -30,35 +30,25 @@ import javafx.stage.Stage;
 // * @author Conrad
  */
 public class ChangeController implements Initializable {
-
-   
     @FXML
     private Button cancelButton;
     @FXML
     private TextField txtfirstname;
-    
     @FXML
     private TextField txtpn;
-    
     @FXML
     private Button change;
     @FXML
     private Button clear;
     @FXML
     private TextField txtlastname;
-    
-    
-    
-    
+
     @FXML
     private void cancel(ActionEvent event) throws IOException {
+ 
         
-        System.out.println("lol");
         Stage stage = (Stage) cancelButton.getScene().getWindow();
         stage.close();
-
-        
-
     }
     
     @FXML
@@ -78,67 +68,49 @@ public class ChangeController implements Initializable {
     private void changename(ActionEvent event) throws IOException {
 
  
-    if(txtfirstname.getText().isEmpty() || txtlastname.getText().isEmpty() || txtpn.getText().isEmpty()){
-   
-    
-    
+    try{
+        if(txtfirstname.getText().isEmpty() || txtlastname.getText().isEmpty() || txtpn.getText().isEmpty()){
+            System.err.println("The fields may not be empty.");
     }
     else{
        
-        boolean check = false;
         String toUse = bank.projekt.capitalize.Sortera(txtfirstname);
         txtfirstname.setText(toUse);
+        
         if(toUse.length() == 0){
-            
-         
-            check = true;
+                throw new Exception();
         }
         
-        if(!check){
-            
-            toUse = bank.projekt.capitalize.Sortera(txtfirstname);
-            txtfirstname.setText(toUse);
-            System.out.println(toUse);
-            if(toUse.length() == 0){
-       
-                check = true;
-         
-            }
+        toUse = bank.projekt.capitalize.Sortera(txtlastname);
+        txtlastname.setText(toUse);
+        
+        if(toUse.length() == 0){
+                throw new Exception();
         }
         
-        
-        if(!check){
-            String pNr = txtpn.getText();
-            pNr = pNr.replaceAll("[^0-9]", "");
-            
-        
+        String pNr = txtpn.getText();
+        pNr = pNr.replaceAll("[^0-9]", "");
         txtpn.setText(pNr);
+        
         if(pNr.length() == 0){
-   
-            check = true;
+            throw new Exception();
         }
         
-        if(!check){
-            data.setAll(bank.projekt.BankLogic.kunder);
+        data.setAll(bank.projekt.BankLogic.kunder);
         Long pNr_input = Long.parseLong(pNr);
         toUse = txtfirstname.getText() + " " + txtlastname.getText();
         if(bank.projekt.BankLogic.changeCustomerName(toUse, pNr_input) == true){
-   
-        }
-        else{
-        }
- 
             Stage stage = (Stage) cancelButton.getScene().getWindow();
             stage.close();
         }
-        
-           
+        else{
+            System.err.println("You must provide the same pNr to that of the Customer that you want to change.");
+        }
+        }
     }
-    
-    
-    
+    catch(Exception e){
+        System.err.println("The name inputs must consist of 1 letter at least, and the pNr at least 1 number long.");
     }
-
     }
 
     @Override

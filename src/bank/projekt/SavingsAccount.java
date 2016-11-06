@@ -16,13 +16,19 @@ public class SavingsAccount extends Account{
     private boolean withdrawn = false;
     private double  interest = 1.01;
     private String accountType = "Savingsaccount";
+    private int kontonummer = getAccountNumberCounter() - 1;
      //Ett sparkonto ska ha ; saldo, interest,kontoNummer, kontoTyp, withdrawn
     
-        public SavingsAccount(String accountType, double balance) { 
-//parameter från super class Account
+        public SavingsAccount(String accountType, double balance, int kontonummer) { 
+            
+  
            super (accountType, balance);
+           
+           
             firstWithdrawal=false;
+            
             transactionsList.add("Savings account named: " + accountType + " was created: " + date.toString() + " Balance: " + balance);
+            
 
       
         setAcct_type("Savingsaccount");
@@ -33,40 +39,54 @@ public class SavingsAccount extends Account{
 
         super();
         setAcct_type("Savingsaccount");
+        
 
           }
+     
+     
         public void closeCurrentAccount() {
 
-        System.out.println( "Ending balance: " + balance +  " Interest: " + balance*0.01);
+       
 
         }
         public boolean withdraw(double value) {
+            
             if(balance >= value){
+              
               if(firstWithdrawal==false){
-                balance-=value;
-                System.out.println("Cash value out: " + value);
-                System.out.println("New balance: " + balance + "\n");
-                transactionsList.add("Time: " + date.toString() + " Withdrawal: " + value + " New balance: " + balance);
+                  super.ammountOfWithdraws += 1;
+                  balance-= value;
+                balance = Math.round(balance * 100.0) / 100.0;
+               
+                try{
+                    transactionsList.add("Time: " + date.toString() + "\nWithdrawal: " + value + " kr. New balance: " + balance + " kr.");
+                }
+                catch(Exception e){
+                    System.out.println(e + " Error in Savings Account");
+                }
                 firstWithdrawal=true;
                 return true;
               }else{
                 if (balance>=1.02*value){
                   balance-=1.02*value;
-                  System.out.println("Cash value out: " + value);
-                  System.out.println("New balance: " + balance + "\n");
-                  System.out.println(" some sum of amount money has been debited from your account");
-        transactionsList.add("Time: " + date.toString() + " Withdrawal: " + value + " New balance: " + balance);
-        return true;
+                  balance = Math.round(balance * 100.0) / 100.0;
+                 
+                transactionsList.add("Time: " + date.toString() + "\nWithdrawal: " + value + " New balance: " + balance);
+                super.ammountOfWithdraws += 1;
+                return true;
                 } else{
-                  System.out.println("Not enough balance amount. Deposit some value.\n");
+                  System.out.println("Not enough balance amount. Deposit some value.\n"); //Change to a Label
                 }
               }
+              
+              
             }else {
-              System.out.println("Not enough balance amount. Deposit some value.\n");
+              System.out.println("Not enough balance amount. Deposit some value.\n"); //Change to a Label
               return false;
             }
             return false;
           }
+
 
     public boolean isWithdrawn() {
         return withdrawn;
@@ -100,11 +120,26 @@ public class SavingsAccount extends Account{
         return this.withdrawn;
     }
 
- 
+    public int getKontoNummer() {
+        return kontonummer;
+    }
+    
+    public double getSaldo() {
+        return balance;
+    }
+
+    public void setSaldo(double saldo) {
+        this.balance = balance;
+    }
 
     @Override
     public String toString() {
-        return "SavingsAccount{" + ", interest=" + interest + ", accountType=" + accountType + '}';
+        //Listan som returneras ska innehålla information om alla konton som togs bort, saldot som kunden får tillbaka samt vad räntan blev.
+        String build = "";
+        
+        build += "SavingsAccount(KontoNummer: " + kontonummer + ", ";
+        
+        return build;
     }
     
 }

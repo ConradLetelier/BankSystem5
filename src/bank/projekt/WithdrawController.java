@@ -5,6 +5,8 @@
  */
 package bank.projekt;
 
+import static bank.projekt.MainpageController.accountnumber;
+import static bank.projekt.MainpageController.data2;
 import java.io.IOException;
 import java.net.URL;
 import java.util.ResourceBundle;
@@ -47,11 +49,21 @@ public class WithdrawController implements Initializable {
     }
        @FXML
     private void withdraw(ActionEvent event) throws IOException {
-
-        MainpageController.withdrawAmount = Integer.parseInt(amountField.getText());
+        try{
+            amountField.setText(amountField.getText().replaceAll("[^0-9]", ""));
+            if(amountField.getText().length() == 0){
+                throw new Exception();
+            }
+        double amount = Double.parseDouble(amountField.getText());
+        BankLogic.withdraw(MainpageController.pNr, accountnumber, amount);
+        MainpageController.withdrawAmount = 0;
         Stage stage = (Stage) withdrawButton.getScene().getWindow();
         stage.close();
 
+    }
+        catch(Exception e){
+            System.err.println("That is not a valid input. Please try again.");
+        }
     }
 
     @Override

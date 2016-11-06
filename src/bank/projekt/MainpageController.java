@@ -8,6 +8,7 @@ package bank.projekt;
 import static bank.projekt.RemoveComfirmController.removeChecker;
 import java.io.IOException;
 import java.net.URL;
+import java.util.ArrayList;
 import java.util.ResourceBundle;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -25,6 +26,7 @@ import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
 import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.scene.input.MouseEvent;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 
@@ -37,11 +39,24 @@ public class MainpageController implements Initializable {
     public static boolean isSavingsAccount = false;
     public static boolean isCreditAccount = false;
     public static int withdrawAmount = 0;
-    public static int depositamount = 0;
+    public static double depositamount = 0;
+
+    static double saldo;
+    static boolean withdrawn;
+    static int index;
+    static long pNr;
+    static int accountnumber;
+    static String removeAction = "";
+    static String special = System.getProperty("user.dir") + "\\clients.txt";
+    
+    @FXML
+    private Button WriteToFile;
     @FXML
     private Label labelText;
     @FXML
     private Button regButton;
+    @FXML
+    private Button TransactionsButton;
     @FXML
     private Button addSaveAccButton;
     @FXML
@@ -58,6 +73,8 @@ public class MainpageController implements Initializable {
     private Button depositButton;
     @FXML
     private Button infoButton;
+    @FXML
+    private Button search;
     @FXML
     private TableView<Customer> table1;
     @FXML
@@ -76,6 +93,10 @@ public class MainpageController implements Initializable {
     private TableColumn<Account, Integer> withdrawColumn;
     @FXML
     private TextField nameInputSearch;
+    @FXML
+    private TextField pnrInputSearch;
+    @FXML
+    private Button reset;
 
     //Table data
     public static ObservableList<Customer> data = FXCollections.observableArrayList();
@@ -93,19 +114,107 @@ public class MainpageController implements Initializable {
         stage.initModality(Modality.APPLICATION_MODAL);
         stage.initOwner(regButton.getScene().getWindow());
         stage.showAndWait();
-
-
-        
-
     }
+    
+    @FXML
+    private void derp1(MouseEvent event) throws IOException{
+       
+        if (!(table1.getSelectionModel().getSelectedIndex() == -1)) {
+            data2.clear();
+            for(Account a : BankLogic.kunder.get((table1.getSelectionModel().getSelectedIndex())).getAllAccounts()){
+                data2.add(a);
+            }
+        }
+        
+        
+    }
+    @FXML
+    private void reset(ActionEvent event) throws IOException{
+        BankLogic.resetSearch();
+        nameInputSearch.setText("");
+        pnrInputSearch.setText("");
+        
+        //Fix so that Accounts are snapped to closest value after closing Account for Customer
+    }
+    
+    @FXML
+    private void TransactionHistory(ActionEvent event) throws IOException{
+        //Do something
+        if(!(table2.getSelectionModel().getSelectedIndex() == -1)//&& table2.getSelectionModel().getSelectedItem().getTransactionsList().size() > 0)
+                ){
+            accountnumber = table2.getSelectionModel().getSelectedItem().getAccountNumber();
+            String keep = "";
+            
+            for(Customer e : BankLogic.kunder){
+                for(Account acc : e.getAllAccounts()){
+                    if(acc.getAccountNumber() == accountnumber){
+                        pNr = e.getPnr();
+                        if(acc instanceof CreditAccount){
+                            keep = "CreditAccount";
+                            isCreditAccount = true;
+  
+                        }
+                        else{
+                            keep = "SavingsAccount";
+                            isSavingsAccount = true;
+                        }
+                        break;
+                    }
+                }
+            }
+            
+            Stage stage;
+            Parent root;
+            stage = new Stage();
+            root = FXMLLoader.load(getClass().getResource("Transactions.fxml"));
+            stage.setScene(new Scene(root));
+            
+            
+            if(keep.equals("SavingsAccount")){
+                stage.setTitle("TransactionHistory for SavingsAccount AccountNr: " + accountnumber);
+            }
+            else if(keep.equals("CreditAccount")){
+                stage.setTitle("TransactionHistory for CreditAccount AccountNr: " + accountnumber);
+            }
+            
+            
+//            for(Customer e : BankLogic.kunder){
+//                for(Account acc : e.getAllAccounts()){
+//                    if(acc.getAccountNumber() == accountnumber){
+//                        pNr = e.getPnr();
+//                        if(acc instanceof CreditAccount){
+//                            isCreditAccount = true;
+//                            
+//                        }
+//                        else{
+//                            isSavingsAccount = true;
+//                        }
+//                        break;
+//                    }
+//                }
+//            }
+            
+            
+            
+            stage.initModality(Modality.APPLICATION_MODAL);
+            stage.initOwner(removeCustomerButton.getScene().getWindow());
+            stage.showAndWait();
+           
+        }else {
+            labelText.setText("Please choose an account");
 
+ 
+        }
+        
+    }
     @FXML
     private void removeCustomer(ActionEvent event) throws IOException {
 
         if (!(table1.getSelectionModel().getSelectedIndex() == -1)) {
+            removeAction = "Remove Customer";
             Stage stage;
             Parent root;
-
+            pNr = BankLogic.kunder.get(table1.getSelectionModel().getSelectedIndex()).getPnr(); //The Persons Number
             stage = new Stage();
             root = FXMLLoader.load(getClass().getResource("RemoveComfirm.fxml"));
             stage.setScene(new Scene(root));
@@ -113,12 +222,11 @@ public class MainpageController implements Initializable {
             stage.initModality(Modality.APPLICATION_MODAL);
             stage.initOwner(removeCustomerButton.getScene().getWindow());
             stage.showAndWait();
+            
 
-            if (removeChecker) {
-                BankLogic.kunder.remove(table1.getSelectionModel().getSelectedIndex());
-                data.remove(table1.getSelectionModel().getSelectedIndex());
-            }
+//            }
             removeChecker = false;
+            
 
 
         } else {
@@ -130,34 +238,42 @@ public class MainpageController implements Initializable {
     @FXML
     private void addCredAcc(ActionEvent event){
         if (!(table1.getSelectionModel().getSelectedIndex() == -1)){
-           // BankLogic.addSavingsAccount(pnrColumn.getCellData(table1.getSelectionModel().getSelectedIndex()));
-           //BankLogic.addSavingsAccount(33);
-            System.out.println(BankLogic.addCreditAccount(33));
-           System.out.println((pnrColumn.getCellData(table1.getSelectionModel().getSelectedIndex())));
-//         Parent root2 = FXMLLoader.load(getClass().getResource("Test.fxml"));
-//            Scene s = new Scene(root2);
-//            Stage stg = (Stage) ((Node) event.getSource()).getScene().getWindow();
-//            stg.setScene(s);
-//            stg.show();
+        CreditAccount test = new CreditAccount();
+        
+        BankLogic.kunder.get(table1.getSelectionModel().getSelectedIndex()).addAccounts(test);
+        
+        data2.add(test);
+        table2.setItems(data2);
         }
-            else {
+        else{
             labelText.setText("Please choose a customer");
-
- 
         }
+        
     }
+    
+    
+    
+
+  
     @FXML
     private void addSaveAcc(ActionEvent event) throws IOException{
         if (!(table1.getSelectionModel().getSelectedIndex() == -1)){
-           // BankLogic.addSavingsAccount(pnrColumn.getCellData(table1.getSelectionModel().getSelectedIndex()));
-           //BankLogic.addSavingsAccount(33);
-            System.out.println(BankLogic.addSavingsAccount(33));
-           System.out.println((pnrColumn.getCellData(table1.getSelectionModel().getSelectedIndex())));
-//         Parent root2 = FXMLLoader.load(getClass().getResource("Test.fxml"));
-//            Scene s = new Scene(root2);
-//            Stage stg = (Stage) ((Node) event.getSource()).getScene().getWindow();
-//            stg.setScene(s);
-//            stg.show();
+           try{
+               
+           
+        
+           
+            BankLogic.addSavingsAccount(BankLogic.kunder.get(table1.getSelectionModel().getSelectedIndex()).getPnr());
+            for(Customer e : BankLogic.kunder){
+                
+            }
+            data2.add(BankLogic.kunder.get(table1.getSelectionModel().getSelectedIndex()).getLastAccount());
+            table2.setItems(data2);
+            
+           }
+           catch(Exception e){
+               System.out.println(e + " Error in adding account");
+           }
         }
             else {
             labelText.setText("Please choose a customer");
@@ -170,7 +286,6 @@ public class MainpageController implements Initializable {
     @FXML
     private void changeCustomer(ActionEvent event) throws IOException {
 
-   if (!(table1.getSelectionModel().getSelectedIndex() == -1)){
         Stage stage;
         Parent root;
         stage = new Stage();
@@ -181,47 +296,72 @@ public class MainpageController implements Initializable {
         stage.initOwner(changeCustomerButton.getScene().getWindow());
         stage.showAndWait();
 
-}
-  else {
-            labelText.setText("Please choose a customer");
-    }
-
-        
-
-
     }
 
     @FXML
     private void accountInfo(ActionEvent event) throws IOException {
-        if (!(table2.getSelectionModel().getSelectedIndex() == -1)) {
-
-            if (table2.getSelectionModel().getSelectedItem().getAcct_type().equals("Savingsaccount")) {
+        try{
+            if (!(table2.getSelectionModel().getSelectedIndex() == -1)) {
+                saldo = table2.getSelectionModel().getSelectedItem().getBalance();
+            Account something = table2.getSelectionModel().getSelectedItem();  
+            if (something instanceof SavingsAccount) {
                 isSavingsAccount = true;
-            } else {
+                
+                withdrawn = (something.getAmmountOfWithdraws() > 0);
+ 
+            } 
+            else if(something instanceof CreditAccount) {
                 isCreditAccount = true;
+                
+              
             }
-
+            
             Stage stage;
             Parent root;
             stage = new Stage();
             root = FXMLLoader.load(getClass().getResource("AccountInfo.fxml"));
             stage.setScene(new Scene(root));
-            stage.setTitle("Account Information");
+            
+            if(something instanceof CreditAccount){
+                accountnumber = ((CreditAccount)something).getAccountNumber();
+                stage.setTitle("Credit Account Nr " + accountnumber);
+            }
+            else{
+                accountnumber = ((SavingsAccount)something).getAccountNumber();
+                stage.setTitle("Savings Account Nr " + accountnumber);
+            }
             stage.initModality(Modality.APPLICATION_MODAL);
             stage.initOwner(infoButton.getScene().getWindow());
             stage.showAndWait();
             isCreditAccount = false;
             isSavingsAccount = false;
-        } else {
-            labelText.setText("Please choose an account");
-
+            }
         }
+            
+        catch(Exception e){
+            labelText.setText("Please choose an account");
+        }
+            
+            
+            
+            
+            
+//        } else {
+//            labelText.setText("Please choose an account");
+//
+//        }
+        }
+        
 
-    }
+    
 
     @FXML
     private void removeAccount(ActionEvent event) throws IOException {
-
+        try{
+            removeAction = "Remove Account";
+            accountnumber = table2.getSelectionModel().getSelectedItem().getAccountNumber();
+        
+        pNr = BankLogic.kunder.get(table1.getSelectionModel().getSelectedIndex()).getPnr();
         Stage stage;
         Parent root;
         stage = new Stage();
@@ -231,12 +371,27 @@ public class MainpageController implements Initializable {
         stage.initModality(Modality.APPLICATION_MODAL);
         stage.initOwner(removeAccountButton.getScene().getWindow());
         stage.showAndWait();
-        BankLogic.kunder.get(table1.getSelectionModel().getSelectedIndex()).getName();
+        
+        table2.setItems(data2);
+        }
+        catch(Exception e){
+            labelText.setText("Please choose an account");
+        }
+        
+        
+        
+        
     }
 
     @FXML
     private void withdraw(ActionEvent event) throws IOException {
         if (!(table2.getSelectionModel().getSelectedIndex() == -1)) {
+            pNr = BankLogic.kunder.get(table1.getSelectionModel().getSelectedIndex()).getPnr();
+            
+            
+            accountnumber = table2.getSelectionModel().getSelectedItem().getAccountNumber();
+            
+            
             Stage stage;
             Parent root;
             stage = new Stage();
@@ -246,13 +401,23 @@ public class MainpageController implements Initializable {
             stage.initModality(Modality.APPLICATION_MODAL);
             stage.initOwner(withdrawButton.getScene().getWindow());
             stage.showAndWait();
-            BankLogic a = new BankLogic();
+            
+            table2.getSelectionModel().getSelectedItem().setBalance(table2.getSelectionModel().getSelectedItem().getBalance());
+            table2.getSelectionModel().getSelectedItem().setAmmountOfWithdraws(table2.getSelectionModel().getSelectedItem().getAmmountOfWithdraws());
+            
+            
+     
+          
+            
+            //Set the i-th item
+            table2.getItems().set(table2.getSelectionModel().getSelectedIndex(), table2.getSelectionModel().getSelectedItem());
+            
+            
+         
+            
+            
 
-            long pnr = BankLogic.kunder.get(table1.getSelectionModel().getSelectedIndex()).getPnr();
-            int accNr = withdrawColumn.getCellData(table2.getSelectionModel().getSelectedIndex());
-
-            a.withdraw(pnr, accNr, withdrawAmount);
-            withdrawAmount = 0;
+            
             
         } else {
             labelText.setText("Please choose an account");
@@ -264,6 +429,10 @@ public class MainpageController implements Initializable {
     @FXML
     private void deposit(ActionEvent event) throws IOException {
         if (!(table2.getSelectionModel().getSelectedIndex() == -1)) {
+            pNr = BankLogic.kunder.get(table1.getSelectionModel().getSelectedIndex()).getPnr();
+            
+            
+            accountnumber = table2.getSelectionModel().getSelectedItem().getAccountNumber();
             Stage stage;
             Parent root;
             stage = new Stage();
@@ -274,13 +443,15 @@ public class MainpageController implements Initializable {
             stage.initOwner(depositButton.getScene().getWindow());
             stage.showAndWait();
 
-            BankLogic a = new BankLogic();
+            
 
-            long pnr = pnrColumn.getCellData(table1.getSelectionModel().getSelectedIndex());
-            int accNr = withdrawColumn.getCellData(table2.getSelectionModel().getSelectedIndex());
-
-            a.deposit(pnr, accNr, depositamount);
-            depositamount = 0;
+            table2.getSelectionModel().getSelectedItem().setBalance(table2.getSelectionModel().getSelectedItem().getBalance());
+     
+          
+            
+            //Set the i-th item
+            table2.getItems().set(table2.getSelectionModel().getSelectedIndex(), table2.getSelectionModel().getSelectedItem());
+            
         }
         {
             labelText.setText("Please choose an account");
@@ -288,10 +459,49 @@ public class MainpageController implements Initializable {
         }
 
     }
+    
+    @FXML
+    private void writeToFile(ActionEvent event) throws IOException{
+        Stage stage;
+        Parent root;
+        stage = new Stage();
+        root = FXMLLoader.load(getClass().getResource("WriteToFile.fxml"));
+        stage.setScene(new Scene(root));
+        stage.setTitle("Write to a File");
+        stage.initModality(Modality.APPLICATION_MODAL);
+        stage.initOwner(WriteToFile.getScene().getWindow());
+        stage.showAndWait();
+        
+        
+    }
 
     @FXML
     public void search(ActionEvent event) throws IOException {
         
+        
+        try{String name = nameInputSearch.getText();
+        name = name.replaceAll("[^a-zA-Z ]", "");
+        nameInputSearch.setText(name);
+        
+        
+        String pNr = pnrInputSearch.getText();
+        
+        String name2 = pNr.replaceAll("[^0-9]", "");
+       
+        long parse;
+        if(name2.length() > 0){
+            pnrInputSearch.setText(name2);
+            parse = Long.parseLong(name2);
+        }
+        else{
+            parse = 0;
+            pnrInputSearch.setText("0");
+        }
+        BankLogic.searchCustomer(name, parse);
+        }
+        catch(Exception e){
+            System.out.println(e + " Error in Search");
+        }
     }
 
     @Override
@@ -306,7 +516,8 @@ public class MainpageController implements Initializable {
         BankLogic.InitilizeList();
         table1.setItems(data);
         table2.setItems(data2);
-
+        
+        
     }
 
 }

@@ -11,26 +11,27 @@ package bank.projekt;
  */
 public class CreditAccount extends Account{
     private String accountType = "KreditKonto";
-    private int kontoNummer;
+    private int kontoNummer = getAccountNumberCounter() - 1;
    
-    private double saldo , interest, debt_interest;
-    private double limit = 5000.0;
+    private double saldo = 1000;
+    private double debt_interest = 0.07; //7% debt interest
+    private double interest = 0.005; //0.5% positive interest
+    private double limit = -5000.0;
     
     
     //Ett kreditkonto ska ha ; saldo, kontoNummer, interest, skuldInterest,  kontoTyp, kreditGräns
-    public CreditAccount(Double saldo, double interest, String name, int kontoNummer, String accountType){
+    public CreditAccount(){
+        
         this.saldo = saldo;
         this.accountType = accountType;
         this.debt_interest = debt_interest;
-        this.interest = interest;
+        this.interest = 0.005;
         this.limit = limit;
         this.kontoNummer = kontoNummer;
-        setAcct_type("Creditaccount");
+        
+        
     }
-    public CreditAccount(){
-        super();
-        setAcct_type("Creditaccount");
-    }
+ 
 
     public String getAccountType() {
         return accountType;
@@ -79,15 +80,48 @@ public class CreditAccount extends Account{
     public void setLimit(double limit) {
         this.limit = limit;
     }
-
+    
+    
     @Override
     public boolean withdraw(double value) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        
+        if((super.getBalance() - value) < -5000){
+            return false;
+        }
+        else{
+            
+            super.setBalance(super.getBalance() - value);
+            super.ammountOfWithdraws += 1;
+            transactionsList.add("Time: " + date.toString() + "\nWithdrawal: " + value + " kr. New balance: " + super.getBalance() + " kr.");
+            return true;
+        }
+
+    }
+    
+    public String getAccount(){
+        String build = "CreditAccount(";
+        //(kontonummer, saldo, kontotyp, räntesats).
+        build += "KontoNummer: " + kontoNummer + ", Saldo: " + balance;
+        build += (balance < 0) ? ", 7% Skuldränta" : ", 0.5% Ränta)";
+        return build;
     }
 
     @Override
     public String toString() {
-        return "CreditAccount{" + "accountType=" + accountType + ", interest=" + interest + ", debt_interest=" + debt_interest + ", limit=" + limit + '}';
+//        String build = "";
+//        
+//        build += "SavingsAccount(KontoNummer: " + kontonummer + ", ";
+//        build+= "Interest Rate: 1%, ";
+//        build+= "Interest: " + (balance*interest) + ", ";
+//        build += "Total Balance: " + balance;
+//        
+//        
+//        return build;
+        String build = "CreditAccount{";
+        build += "KontoNummer: " + kontoNummer + ", ";
+         return build;
+        
+      
     }
     
     

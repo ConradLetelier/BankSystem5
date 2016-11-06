@@ -5,19 +5,15 @@
  */
 package bank.projekt;
 
+import static bank.projekt.MainpageController.accountnumber;
 import java.io.IOException;
 import java.net.URL;
 import java.util.ResourceBundle;
-import javafx.application.Platform;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
-import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
-import javafx.scene.Node;
-import javafx.scene.Parent;
-import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.ListView;
@@ -35,6 +31,8 @@ public class AccInfoController implements Initializable {
     private Button cancelButton;
     @FXML
     private ListView listView1;
+    @FXML
+    private Label title;
 
     @FXML
     private void cancel(ActionEvent event) throws IOException {
@@ -48,54 +46,73 @@ public class AccInfoController implements Initializable {
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         // TODO
-        if(MainpageController.isCreditAccount){
-           CreditAccount creditInput = new CreditAccount();
+        try{
             
-            for(int i = 0; i < 4; i++){
-                if (i==0){
-                    String a ="Account type: " +creditInput.getAccountType();
-                    currentlist.add(a);
-                }
-                if (i==1){
-                    String a = "Debt interest: " + creditInput.getDebt_interest();
-                    currentlist.add(a);
-                }
-                if (i==2){
-                    String a = "Interest" + creditInput.getInterest();
-                    currentlist.add(a);
-                }
-                if(i == 3){
-                    String a = "Credit limit: " + creditInput.getLimit();
-                    currentlist.add(a);
-                }
-                
+           
+            String a;
+        if(MainpageController.isCreditAccount){
+
+            a ="Account type: CreditAccount";
+            currentlist.add(a);
+
+
+            if(MainpageController.saldo < 0){
+                a = "Debt interest: 7%";
             }
-        }
-        else{
-            SavingsAccount saveInput = new SavingsAccount();
-   
-             for(int i = 0; i < 4; i++){
-                if (i==0){
-                    String a ="Account type: " +saveInput.getAccountType();
-                    currentlist.add(a);
-                }
-                if (i==1){
-                    String a = "Number of free withdraws: 1";
-                    currentlist.add(a);
-                }
-                if (i==2){
-                    String a = "Interest rate: 10%";
-                    currentlist.add(a);
-                }
-                if(i == 3){
-                    String a = "Withdraw rate: 2%";
-                    currentlist.add(a);
-                }
+
+
+            if(MainpageController.saldo >= 0){
+                a = "Interest: 0.5%";
+            }
+            currentlist.add(a);
+
+            a = "Credit limit: -5000";
+            currentlist.add(a);
+
+            a = "Balance: " + MainpageController.saldo;
+            currentlist.add(a);
                 
-            }       
+                
+            
+        }
+        else if (MainpageController.isSavingsAccount){
+          
+                    a ="Account type: SavingsAccount";
+                    currentlist.add(a);
+                    
+                    
+            
+                    if(!MainpageController.withdrawn){
+                        a = "Number of free withdrawals left: 1";
+                        currentlist.add(a);
+                        a = "Withdraw Fee: 0%";
+                        currentlist.add(a);
+                        
+                    }
+                    else{
+                        a = "Number of free withdrawals left: NONE";
+                        currentlist.add(a);
+                        a = "Withdraw Fee: 2%";
+                        currentlist.add(a);
+                    }
+                    
+              
+                    a = "Interest rate: 1%";
+                    currentlist.add(a);
+                    
+                    a = "Balance: " + MainpageController.saldo;
+                    currentlist.add(a);
+               
+                     
+                
+                
+                 
         }
         listView1.setItems(currentlist);
     }
     
-
+    catch(Exception e){
+    System.out.println(e);
+}
+    }
 }

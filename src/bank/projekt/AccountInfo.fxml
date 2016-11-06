@@ -19,7 +19,7 @@
             </ImageView>
          </children>
       </AnchorPane>
-      <Label layoutX="173.0" layoutY="145.0" text="Account Information">
+      <Label fx:id="title" layoutX="173.0" layoutY="145.0" text="Account Information">
          <font>
             <Font name="System Bold" size="14.0" />
          </font>

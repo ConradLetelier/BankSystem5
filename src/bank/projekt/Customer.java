@@ -11,15 +11,17 @@ import java.util.ArrayList;
  * @author Micke
  */
 public class Customer {
-    String name;
+    private String name;
     long pNr;
-     private ArrayList<Account> accounts;
-     
+    
+     private ArrayList<Account> accounts = new ArrayList<Account>();
     public Customer(){
+        
         
     }
     
     public Customer(String name, long pNr){
+        
         this.name = name;
         this.pNr = pNr;
     }
@@ -36,23 +38,29 @@ public class Customer {
         return pNr;
     }
 
-    public void setPnr(long pNr) {
+    public void setpNr(long pNr) {
         this.pNr = pNr;
     }
        public String getCustomer(){
      return "Name: "+getName()+", Personal number: "+ getPnr();
    }
   
-          public ArrayList<Account> getAllAccounts() {
-     return accounts;
+    public ArrayList<Account> getAllAccounts() {
+              ArrayList<Account> something = accounts;
+     return something;
    }
     
            public void addAccounts(Account s) {
-     accounts.add(s);
+     this.accounts.add(s);
+     
    }
              public int getLastAccountNr() {
      return accounts.get(accounts.size()-1).getAccountNumber();
    }
+             
+             public Account getLastAccount(){
+                 return accounts.get(accounts.size()-1);
+             }
 
 
 }
