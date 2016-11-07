@@ -73,7 +73,7 @@
             <Button fx:id="withdrawButton" mnemonicParsing="false" onAction="#withdraw" prefWidth="160.0" text="Withdraw" />
             <Button fx:id="depositButton" mnemonicParsing="false" onAction="#deposit" prefWidth="160.0" text="Deposit" />
             <Button fx:id="TransactionsButton" mnemonicParsing="false" onAction="#TransactionHistory" prefWidth="160.0" text="Transaction History" />
-            <Button fx:id="WriteToFile" mnemonicParsing="false" onAction="#writeToFile" text="Write To File" />
+            <Button fx:id="WriteToFile" mnemonicParsing="false" onAction="#writeToFile" prefWidth="160.0" text="Write To File" />
             <Region prefHeight="0.0" prefWidth="163.0" VBox.vgrow="ALWAYS" />
             <Separator prefHeight="0.0" prefWidth="163.0" />
          </children>
