@@ -112,7 +112,7 @@
                   <Font name="System Bold" size="20.0" />
                </font>
             </Label>
-            <TableView fx:id="table1" onMouseClicked="#derp1" prefHeight="405.0" prefWidth="249.0" VBox.vgrow="ALWAYS">
+            <TableView fx:id="table1" onMouseClicked="#ListSelected" prefHeight="405.0" prefWidth="249.0" VBox.vgrow="ALWAYS">
               <columns>
                 <TableColumn id="a" fx:id="NameColumn" prefWidth="110.0" text="Name" />
                 <TableColumn id="b" fx:id="pnrColumn" prefWidth="137.0" text="Person Number" />

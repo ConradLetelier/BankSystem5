@@ -9,7 +9,7 @@ public abstract class Account {
     //skapa object av class Date
     static Date date = new Date();
     //instans variable
-    protected double balance = 900;
+    protected double balance = 0;
     private String acct_type;
     private int accountNumber;
     private static int interestRate = 1;
@@ -110,7 +110,10 @@ public abstract class Account {
     public static String closeCurrentAccount(Account acc) {
         String SomethingReturn = "";
         System.out.println("Your saldo when you had no interest applied, was: " + acc.getBalance() + " kr.");
-        if(acc instanceof CreditAccount){
+        if(acc instanceof CreditAccount){ //Precis som att man kan kalla på en superklass Konstrutor osv.
+            //Så kan man kalla på en Subklass saker, genom att titta om ett objekt är en instans av lägre klass.
+            
+            
             //presentation av kontots saldo samt ränta på pengarna ska genereras.
             
             //number is the Interest rate

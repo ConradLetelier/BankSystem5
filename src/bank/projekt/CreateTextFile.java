@@ -14,10 +14,7 @@ import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.PrintStream;
 import java.lang.SecurityException;
-import java.nio.file.Paths;
 import java.util.Formatter;
-import java.util.FormatterClosedException;
-import java.util.NoSuchElementException;
 import java.util.Scanner;
 
 public class CreateTextFile

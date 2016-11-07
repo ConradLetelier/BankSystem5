@@ -5,12 +5,7 @@
  */
 package bank.projekt;
 
-import java.util.regex.Pattern;
 import javafx.scene.control.TextField;
-import javafx.scene.control.Button;
-import javafx.scene.control.Label;
-import javafx.geometry.Rectangle2D;
-import javafx.scene.text.Font;
 
 /**
  *
@@ -75,40 +70,6 @@ public class capitalize {
         return toUse;
     }
     
-    public static void SetButtons(TextField box1, Button confirmed1, Button confirmed2, Label errorLabel2, String button){
-        if(box1.getText().length() == 0 || box1.getText().equals(" ")){
-                confirmed1.setText("Failed");
-                confirmed1.setStyle("-fx-font: 20 arial; -fx-base: #FF0000;");
-                if(button.equals("Ny Kund")){
-                    if(box1.getText().equals(" ")){
-                    errorLabel2.setText("You must provide a First Name and a Last Name");
-                }
-                else{
-                    errorLabel2.setText("You cannot have a Blank Name");
-                }
-            }
-        }
-            else{
-                errorLabel2.setText("");
-                confirmed1.setText("Accepted");
-                confirmed1.setStyle("-fx-font: 20 arial; -fx-base: #006000;");
-            }
-    }
-    
-    public static void setLabelofButtons(Button label, String name, double X, double Y, int height, int width, Rectangle2D rect){
-        label.setText(name);
-        label.setLayoutX(rect.getWidth()/X);
-        label.setLayoutY(rect.getHeight()/Y);
-        label.setMinHeight(height);
-        label.setMinWidth(width);
-    }
-    
-    public static void setLabelofLabels(Label label, String name, double X, double Y, int height, int width, Rectangle2D rect){
-        label.setText(name);
-        label.setLayoutX(rect.getWidth()/X);
-        label.setLayoutY(rect.getHeight()/Y);
-        label.setMinHeight(height);
-        label.setMinWidth(width);
-        label.setFont(Font.font("Arial Black", 20));
-    }
+  
+
 }

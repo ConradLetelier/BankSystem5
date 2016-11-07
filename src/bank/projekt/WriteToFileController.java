@@ -237,16 +237,17 @@ public class WriteToFileController implements Initializable {
         }
         if(pass){
             for(Customer e : BankLogic.kunder){
-                System.out.println("printing");
+                
                 
                     String name = e.getName();
                     name = capitalize.capitalize(name);
-                    toPrint += "pNr: " + MainpageController.pNr + ", Name and Last Name : " + name + "\n";
+                    toPrint += "pNr: " + e.getPnr() + ", Name and Last Name : " + name + "\n";
                     
                 
             }
         
         if(file != null){//A file has been selected, write to that one
+            
         CreateTextFile.openFile(MainpageController.special, file, toPrint, Overwrite); //Write to the file
         }
         else{

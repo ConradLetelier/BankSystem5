@@ -114,16 +114,21 @@ public class MainpageController implements Initializable {
         stage.initModality(Modality.APPLICATION_MODAL);
         stage.initOwner(regButton.getScene().getWindow());
         stage.showAndWait();
+        
+        labelText.setText("");
+        
     }
     
     @FXML
-    private void derp1(MouseEvent event) throws IOException{
+    private void ListSelected(MouseEvent event) throws IOException{
        
         if (!(table1.getSelectionModel().getSelectedIndex() == -1)) {
             data2.clear();
-            for(Account a : BankLogic.kunder.get((table1.getSelectionModel().getSelectedIndex())).getAllAccounts()){
+            for(Account a: table1.getSelectionModel().getSelectedItem().getAllAccounts()){
                 data2.add(a);
             }
+            
+            pNr = table1.getSelectionModel().getSelectedItem().getPnr();
         }
         
         
@@ -140,8 +145,7 @@ public class MainpageController implements Initializable {
     @FXML
     private void TransactionHistory(ActionEvent event) throws IOException{
         //Do something
-        if(!(table2.getSelectionModel().getSelectedIndex() == -1)//&& table2.getSelectionModel().getSelectedItem().getTransactionsList().size() > 0)
-                ){
+        if(!(table2.getSelectionModel().getSelectedIndex() == -1) && table2.getSelectionModel().getSelectedItem().getTransactionsList().size() > 0){
             accountnumber = table2.getSelectionModel().getSelectedItem().getAccountNumber();
             String keep = "";
             
@@ -176,34 +180,16 @@ public class MainpageController implements Initializable {
             else if(keep.equals("CreditAccount")){
                 stage.setTitle("TransactionHistory for CreditAccount AccountNr: " + accountnumber);
             }
-            
-            
-//            for(Customer e : BankLogic.kunder){
-//                for(Account acc : e.getAllAccounts()){
-//                    if(acc.getAccountNumber() == accountnumber){
-//                        pNr = e.getPnr();
-//                        if(acc instanceof CreditAccount){
-//                            isCreditAccount = true;
-//                            
-//                        }
-//                        else{
-//                            isSavingsAccount = true;
-//                        }
-//                        break;
-//                    }
-//                }
-//            }
-            
-            
-            
+
             stage.initModality(Modality.APPLICATION_MODAL);
             stage.initOwner(removeCustomerButton.getScene().getWindow());
             stage.showAndWait();
+            labelText.setText("");
            
-        }else {
-            labelText.setText("Please choose an account");
-
- 
+        }
+        
+        else{
+            labelText.setText("Please select an Account to show Transactions for.");
         }
         
     }
@@ -226,6 +212,7 @@ public class MainpageController implements Initializable {
 
 //            }
             removeChecker = false;
+            labelText.setText("");
             
 
 
@@ -244,6 +231,7 @@ public class MainpageController implements Initializable {
         
         data2.add(test);
         table2.setItems(data2);
+        labelText.setText("");
         }
         else{
             labelText.setText("Please choose a customer");
@@ -269,6 +257,7 @@ public class MainpageController implements Initializable {
             }
             data2.add(BankLogic.kunder.get(table1.getSelectionModel().getSelectedIndex()).getLastAccount());
             table2.setItems(data2);
+            labelText.setText("");
             
            }
            catch(Exception e){
@@ -295,6 +284,7 @@ public class MainpageController implements Initializable {
         stage.initModality(Modality.APPLICATION_MODAL);
         stage.initOwner(changeCustomerButton.getScene().getWindow());
         stage.showAndWait();
+        labelText.setText("");
 
     }
 
@@ -330,16 +320,21 @@ public class MainpageController implements Initializable {
                 accountnumber = ((SavingsAccount)something).getAccountNumber();
                 stage.setTitle("Savings Account Nr " + accountnumber);
             }
+            labelText.setText("");
             stage.initModality(Modality.APPLICATION_MODAL);
             stage.initOwner(infoButton.getScene().getWindow());
             stage.showAndWait();
             isCreditAccount = false;
             isSavingsAccount = false;
             }
+            
+            else{
+                labelText.setText("Please choose an account.");
+            }
         }
             
         catch(Exception e){
-            labelText.setText("Please choose an account");
+            labelText.setText("Please choose an account.");
         }
             
             
@@ -373,6 +368,9 @@ public class MainpageController implements Initializable {
         stage.showAndWait();
         
         table2.setItems(data2);
+        
+        labelText.setText("");
+            
         }
         catch(Exception e){
             labelText.setText("Please choose an account");
@@ -412,7 +410,7 @@ public class MainpageController implements Initializable {
             //Set the i-th item
             table2.getItems().set(table2.getSelectionModel().getSelectedIndex(), table2.getSelectionModel().getSelectedItem());
             
-            
+            labelText.setText("");
          
             
             
@@ -451,6 +449,7 @@ public class MainpageController implements Initializable {
             
             //Set the i-th item
             table2.getItems().set(table2.getSelectionModel().getSelectedIndex(), table2.getSelectionModel().getSelectedItem());
+            labelText.setText("");
             
         }
         {
@@ -466,6 +465,7 @@ public class MainpageController implements Initializable {
         Parent root;
         stage = new Stage();
         root = FXMLLoader.load(getClass().getResource("WriteToFile.fxml"));
+        labelText.setText("");
         stage.setScene(new Scene(root));
         stage.setTitle("Write to a File");
         stage.initModality(Modality.APPLICATION_MODAL);
@@ -473,31 +473,88 @@ public class MainpageController implements Initializable {
         stage.showAndWait();
         
         
+        
     }
 
     @FXML
     public void search(ActionEvent event) throws IOException {
         
-        
+        boolean error = false;
+        boolean error2 = false;
         try{String name = nameInputSearch.getText();
+        
+        String test2 = nameInputSearch.getText();
+        
+        String test3 = test2.replaceAll("[^0-9]", "");
+        if(test3.length() > 0){
+            error2 = true;
+        }
         name = name.replaceAll("[^a-zA-Z ]", "");
         nameInputSearch.setText(name);
         
         
         String pNr = pnrInputSearch.getText();
+        try{
+            if(pNr.length() > 0){
+                long test = Long.parseLong(pNr);
+            }
+        }
+        catch(Exception e){
+            error = true;
+        }
         
         String name2 = pNr.replaceAll("[^0-9]", "");
        
         long parse;
-        if(name2.length() > 0){
+        if(name2.length() > 0 && name.length() > 0){
             pnrInputSearch.setText(name2);
             parse = Long.parseLong(name2);
+            if(!BankLogic.searchCustomer(name, parse)){
+                labelText.setText("No customer with that pNr and Name was found.");
+            }
+            else{
+                labelText.setText("");
+            }
+        }
+        else if(name2.length() == 0 && (!name.equals(""))){
+            parse = 0;
+            if(!BankLogic.searchCustomer(name, parse)){
+                labelText.setText("No customer with that name was found.");
+            }
+            else{
+                labelText.setText("");
+            }
+        }
+        else if(name2.length() > 0 && (name.equals(""))){
+            pnrInputSearch.setText(name2);
+            parse = Long.parseLong(name2);
+            if(!BankLogic.searchCustomer(name, parse)){
+                labelText.setText("No customer with that pNr was found.");
+            }
+            else{
+                labelText.setText("");
+            }
         }
         else{
-            parse = 0;
-            pnrInputSearch.setText("0");
+            BankLogic.resetSearch();
+            nameInputSearch.setText("");
+            pnrInputSearch.setText("");
+            if(error && error2){ //Error1 is for Numbers field and Error2 is for the letters field
+                labelText.setText("WARNING: Letters in the Numbers Section/Numbers in the Letters field are discarded.");
+            }
+            else if(error){ 
+                labelText.setText("WARNING: Letters in the Numbers Section field are discarded.");
+            }
+            else if(error2){
+                labelText.setText("WARNING: Numbers in the Letters field are discarded.");
+            }
+            else{
+                labelText.setText("");
+            }
+            
         }
-        BankLogic.searchCustomer(name, parse);
+        
+        
         }
         catch(Exception e){
             System.out.println(e + " Error in Search");

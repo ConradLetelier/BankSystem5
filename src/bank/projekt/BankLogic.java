@@ -33,16 +33,18 @@ public class BankLogic {
         //finns någon kund med personnummer pNr. Returnerar true om kund skapades annars returneras false.
         if(kunder.size() > 0){
             for(Customer e : kunder){
-                if(e.pNr == pNr){
+                
+                if(e.getPnr() == pNr){
                     System.err.println("A person with this Social Security Number already exists!"); //Fixa label med Error
                     return false;
+            }
             }
             Customer kund = new Customer(name, pNr);
             data.add(kund);
             kunder.add(kund);
             return true; 
             }
-        }
+        
         else{
             Customer kund = new Customer(name, pNr);
             data.add(kund);
@@ -56,39 +58,62 @@ public class BankLogic {
     
     public static void resetSearch(){
         data.clear();
+       
+        MainpageController.data2.clear();
         for(Customer e: kunder){
             data.add(e);
+            
         }
     }
     
-    public static void searchCustomer(String name, long pNr){
+    public static boolean searchCustomer(String name, long pNr){
         data.clear();
+        boolean added = false;
+        MainpageController.data2.clear();
         
         if(kunder.size() > 0){
         
-        if(name.equals("") && pNr != 0){
+        if(name.equals("") && pNr != 0){ //Search on pNr
             for(Customer e : kunder){
                 if(e.getPnr() == pNr){
                     data.add(e);
+                    if(e.getAllAccounts().size() > 0 && added == false){
+                    MainpageController.data2.addAll(e.getAllAccounts());
+                    }
+                    added = true;
                     
                 }
             }
         }
-        else if(!name.equals("") && pNr == 0){
+        else if(!name.equals("") && pNr == 0){ //Search on name
             for(Customer e : kunder){
                 if(e.getName().toLowerCase().contains(name.toLowerCase())){
                     data.add(e);
+                    if(e.getAllAccounts().size() > 0 && added == false){
+                    MainpageController.data2.addAll(e.getAllAccounts());
+                    }
+                    added = true;
+                    
                 }
             }
         }
-        else if(!name.equals("") && pNr != 0){
+        else if(!name.equals("") && pNr != 0){ //Search on name and Pnr
             for(Customer e : kunder){
                 if(e.getName().toLowerCase().contains(name.toLowerCase()) || e.getPnr() == pNr){
                     data.add(e);
+                    if(e.getAllAccounts().size() > 0 && added == false){
+                    MainpageController.data2.addAll(e.getAllAccounts());
+                    }
+                    added = true;
                 }
             }
         }
         }
+        if(data.size() == 0){
+            return false;
+            
+        }
+        return true;
     }
     public static ArrayList<String> getCustomer(long pNr){
         //Returnerar en List<String> som innehåller informationen om kunden inklusive dennes konton. 
@@ -209,8 +234,8 @@ public class BankLogic {
             
         }
         
-      
-//        System.out.println(removed + " This is the Returned value for Removed Customer");
+        System.out.println();
+        System.out.println(removed + " This is the Returned value for Removed Customer");
    
         
         

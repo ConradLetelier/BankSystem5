@@ -5,23 +5,14 @@
  */
 package bank.projekt;
 
-import static bank.projekt.MainpageController.data;
 import java.io.IOException;
 import java.net.URL;
 import java.util.ResourceBundle;
-import javafx.application.Platform;
-import javafx.collections.FXCollections;
-import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
-import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
-import javafx.scene.Node;
-import javafx.scene.Parent;
-import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
-import javafx.scene.control.ListView;
 import javafx.scene.control.TextField;
 import javafx.stage.Stage;
 
@@ -64,12 +55,13 @@ public class RegCustomerController implements Initializable {
         Customer listCust;
         boolean pass = false;
         String special = "";
+        String special2 = "";
     
         
         
         
     if(txtfirstname.getText().isEmpty() || txtlastname.getText().isEmpty() || txtpn.getText().isEmpty()){
-        notification.setText("Fill all the values");
+//    notification.setText("Fill all the values");
       System.err.println("One/More of the inputs, are empty.");
 
   
@@ -85,6 +77,8 @@ public class RegCustomerController implements Initializable {
          if(name.length() == 0){
             throw new Exception();
         }
+         
+         
         name = capitalize.Sortera(txtlastname);
         
         txtlastname.setText(name);
@@ -101,6 +95,10 @@ public class RegCustomerController implements Initializable {
         if(name.length() == 0){
             throw new Exception();
         }
+        if(name.equals("0")){
+            special2 = "2";
+            throw new Exception();
+        }
         
 //        listCust = new Customer(txtfirstname.getText() + " " + txtlastname.getText(), Long.parseLong(txtpn.getText()));
         if(!BankLogic.addCustomer(txtfirstname.getText() + " " + txtlastname.getText(), Long.parseLong(txtpn.getText()))){
@@ -115,8 +113,10 @@ public class RegCustomerController implements Initializable {
         catch(Exception e){
             pass = false;
             if(special.equals("")){
-           notification.setText("One of the inputs, ended up being empty. Please try again.");
-                System.err.println("One of the inputs, ended up being empty. Please try again.");
+            System.err.println("One of the inputs, ended up being empty. Please try again.");
+            }
+            if(special2.equals("2")){
+                System.err.println("You can't add a Customer with the pNr value of 0.");
             }
         }
  
