@@ -61,7 +61,7 @@ public class RegCustomerController implements Initializable {
         
         
     if(txtfirstname.getText().isEmpty() || txtlastname.getText().isEmpty() || txtpn.getText().isEmpty()){
-//    notification.setText("Fill all the values");
+         notification.setText("Fill all the values");
       System.err.println("One/More of the inputs, are empty.");
 
   
