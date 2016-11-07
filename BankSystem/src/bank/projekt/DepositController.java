@@ -5,6 +5,7 @@
  */
 package bank.projekt;
 
+import static bank.projekt.MainpageController.accountnumber;
 import java.io.IOException;
 import java.net.URL;
 import java.util.ResourceBundle;
@@ -21,24 +22,51 @@ import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.ListView;
+import javafx.scene.control.TextField;
 import javafx.stage.Stage;
 
 /**
  *
  * @author Conrad
  */
-public class RegCustomerController implements Initializable {
+public class DepositController implements Initializable {
 
     @FXML
-    private Label label;
+    private Button depositButton;
     @FXML
     private Button cancelButton;
+    @FXML
+    private TextField amountField;
 
     @FXML
     private void cancel(ActionEvent event) throws IOException {
 
         Stage stage = (Stage) cancelButton.getScene().getWindow();
 
+        stage.close();
+
+    }
+        @FXML
+    private void deposit(ActionEvent event) throws IOException {
+        
+        try{
+            amountField.setText(amountField.getText().replaceAll("[^0-9]", ""));
+            if(amountField.getText().length() == 0){
+                throw new Exception();
+            }
+        }
+        catch(Exception e){
+            System.err.println("That is not a valid input, please try again.");
+        }
+
+        MainpageController.depositamount = Double.parseDouble(amountField.getText());
+        try{
+            BankLogic.deposit(MainpageController.pNr, accountnumber, MainpageController.depositamount);
+        }
+        catch(Exception e){
+            System.out.println(e);
+        }
+        Stage stage = (Stage) depositButton.getScene().getWindow();
         stage.close();
 
     }

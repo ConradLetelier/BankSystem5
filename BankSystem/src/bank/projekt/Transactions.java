@@ -6,6 +6,7 @@
 package bank.projekt;
 
 import java.text.SimpleDateFormat;
+import java.util.Calendar;
 import java.util.Date;
 
 /**
@@ -15,22 +16,27 @@ import java.util.Date;
 public class Transactions {
     
  private int accountID; 
- private Date time; 
+ private String day; 
  private String transactionType; 
  private double amount; 
  private double balance; 
+ private String time;
  
  
-public Transactions(int accountID, String transactionType, double amount, double balance){
+public Transactions(int accountID, String transactionType, double amount, double balance, String day){
 
 this.accountID = accountID; 
 this.amount = amount; 
 this.balance = balance;
 this.transactionType = transactionType;
+this.day = Date();
+SimpleDateFormat time_formatter = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+    String current_time = time_formatter.format(System.currentTimeMillis());
+this.time = current_time;
 
 } 
 
-public String Date(){
+public static String Date(){
 Date currentdate = new Date(); 
 SimpleDateFormat sdf = new SimpleDateFormat("YYYY-MM-dd"); 
 String s = sdf.format(currentdate); 
@@ -38,17 +44,22 @@ return s;
 }
 
 public String toString(){
+    
 
-return(Date() + this.transactionType + this.amount + this.balance);
-
+ if(this.transactionType.equals("Withdrawal: ")){
+    return (this.time + "\n" + this.transactionType +  " " + this.amount + " kr.\nPrevious balance was: " + (this.balance+this.amount) + " kr.\nYour New balance is: " + (this.balance) + " kr.");
+}
+ else{
+return(this.time + "\n" + this.transactionType +  " " + this.amount + " kr.\nPrevious balance was: " + (this.balance-this.amount) + " kr.\nYour New balance is: " + (this.balance) + " kr.");
+ }
 }
 
     public int getAccountID() {
         return accountID;
     }
 
-    public Date getTime() {
-        return time;
+    public String getDay() {
+        return day;
     }
 
     public String getTransactionType() {

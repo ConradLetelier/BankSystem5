@@ -5,6 +5,8 @@
  */
 package bank.projekt;
 
+import static bank.projekt.MainpageController.accountnumber;
+import static bank.projekt.MainpageController.data2;
 import java.io.IOException;
 import java.net.URL;
 import java.util.ResourceBundle;
@@ -21,17 +23,21 @@ import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.ListView;
+import javafx.scene.control.TextField;
 import javafx.stage.Stage;
 
 /**
  *
  * @author Conrad
  */
-public class ComfirmController implements Initializable {
+public class WithdrawController implements Initializable {
 
-    
+    @FXML
+    private Button withdrawButton;
     @FXML
     private Button cancelButton;
+    @FXML
+    private TextField amountField;
 
     @FXML
     private void cancel(ActionEvent event) throws IOException {
@@ -40,6 +46,24 @@ public class ComfirmController implements Initializable {
 
         stage.close();
 
+    }
+       @FXML
+    private void withdraw(ActionEvent event) throws IOException {
+        try{
+            amountField.setText(amountField.getText().replaceAll("[^0-9]", ""));
+            if(amountField.getText().length() == 0){
+                throw new Exception();
+            }
+        double amount = Double.parseDouble(amountField.getText());
+        BankLogic.withdraw(MainpageController.pNr, accountnumber, amount);
+        MainpageController.withdrawAmount = 0;
+        Stage stage = (Stage) withdrawButton.getScene().getWindow();
+        stage.close();
+
+    }
+        catch(Exception e){
+            System.err.println("That is not a valid input. Please try again.");
+        }
     }
 
     @Override
