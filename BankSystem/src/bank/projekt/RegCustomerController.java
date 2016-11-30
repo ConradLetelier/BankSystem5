@@ -22,6 +22,8 @@ import javafx.stage.Stage;
  */
 public class RegCustomerController implements Initializable {
 
+    
+    
     @FXML
     private Button cancelButton;
     @FXML
@@ -56,17 +58,11 @@ public class RegCustomerController implements Initializable {
         boolean pass = false;
         String special = "";
         String special2 = "";
+      String special3 = "";
     
         
         
-        
-    if(txtfirstname.getText().isEmpty() || txtlastname.getText().isEmpty() || txtpn.getText().isEmpty()){
-         notification.setText("Fill all the values");
-      System.err.println("One/More of the inputs, are empty.");
 
-  
-    }
-    
     try{
                 
             
@@ -95,16 +91,18 @@ public class RegCustomerController implements Initializable {
         if(name.length() == 0){
             throw new Exception();
         }
-        if(name.equals("0")){
+        if(txtpn.getLength()!=12){
             special2 = "2";
             throw new Exception();
         }
+       
         
 //        listCust = new Customer(txtfirstname.getText() + " " + txtlastname.getText(), Long.parseLong(txtpn.getText()));
         if(!BankLogic.addCustomer(txtfirstname.getText() + " " + txtlastname.getText(), Long.parseLong(txtpn.getText()))){
             special = "1";
             throw new Exception();
         };
+         
             
 //            data.add(listCust);
             
@@ -113,11 +111,18 @@ public class RegCustomerController implements Initializable {
         catch(Exception e){
             pass = false;
             if(special.equals("")){
-            System.err.println("One of the inputs, ended up being empty. Please try again.");
+           
+            notification.setText("Fill all the values");
             }
             if(special2.equals("2")){
-                System.err.println("You can't add a Customer with the pNr value of 0.");
+                //System.err.println("You can't add a Customer with the pNr value of 0.");
+                notification.setText("Invalid person number.");
             }
+            if(special.equals("1")){
+                notification.setText("Customer alrady exists.");
+            }
+         
+           
         }
  
     
@@ -126,6 +131,7 @@ public class RegCustomerController implements Initializable {
     Stage stage = (Stage) cancelButton.getScene().getWindow();
     stage.close();
     }
+   
     
     }
 
@@ -139,7 +145,7 @@ public class RegCustomerController implements Initializable {
 
     @FXML
     private void handelcancel(ActionEvent event) throws IOException {
-    
+  
            Stage stage = (Stage) cancelButton.getScene().getWindow();
 
         stage.close();

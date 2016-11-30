@@ -40,6 +40,7 @@ public class MainpageController implements Initializable {
     public static boolean isCreditAccount = false;
     public static int withdrawAmount = 0;
     public static double depositamount = 0;
+    public static long CustomerPNR = 0;
 
     static double saldo;
     static boolean withdrawn;
@@ -138,6 +139,7 @@ public class MainpageController implements Initializable {
         BankLogic.resetSearch();
         nameInputSearch.setText("");
         pnrInputSearch.setText("");
+        labelText.setText(" ");
         
         //Fix so that Accounts are snapped to closest value after closing Account for Customer
     }
@@ -275,6 +277,8 @@ public class MainpageController implements Initializable {
     @FXML
     private void changeCustomer(ActionEvent event) throws IOException {
     if (!(table1.getSelectionModel().getSelectedIndex() == -1)){
+        CustomerPNR= BankLogic.kunder.get(table1.getSelectionModel().getSelectedIndex()).getPnr();
+        
         Stage stage;
         Parent root;
         stage = new Stage();

@@ -42,6 +42,8 @@ public class ChangeController implements Initializable {
     private Button clear;
     @FXML
     private TextField txtlastname;
+    @FXML
+    private Label notification1;
 
     @FXML
     private void cancel(ActionEvent event) throws IOException {
@@ -49,6 +51,7 @@ public class ChangeController implements Initializable {
         
         Stage stage = (Stage) cancelButton.getScene().getWindow();
         stage.close();
+       
     }
     
     @FXML
@@ -60,7 +63,7 @@ public class ChangeController implements Initializable {
     private void clear(ActionEvent event) throws IOException{
         txtfirstname.setText("");
         txtlastname.setText("");
-        txtpn.setText("");
+        
     }
     
 @FXML
@@ -70,7 +73,7 @@ public class ChangeController implements Initializable {
  
     try{
         if(txtfirstname.getText().isEmpty() || txtlastname.getText().isEmpty() || txtpn.getText().isEmpty()){
-            System.err.println("The fields may not be empty.");
+            notification1.setText("Empty fields. Try again");
     }
     else{
        
@@ -104,18 +107,19 @@ public class ChangeController implements Initializable {
             stage.close();
         }
         else{
-            System.err.println("You must provide the same pNr to that of the Customer that you want to change.");
+            notification1.setText("Empty fields. Try again");
         }
         }
     }
     catch(Exception e){
-        System.err.println("The name inputs must consist of 1 letter at least, and the pNr at least 1 number long.");
+        notification1.setText("Empty fields. Try again");
     }
     }
 
     @Override
     public void initialize(URL url, ResourceBundle rb) {
-        // TODO
+        String pNr = Long.toString(MainpageController.CustomerPNR);
+        txtpn.setText(pNr);
     }
 
 }

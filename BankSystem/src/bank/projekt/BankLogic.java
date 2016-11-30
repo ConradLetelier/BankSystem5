@@ -35,13 +35,14 @@ public class BankLogic {
             for(Customer e : kunder){
                 
                 if(e.getPnr() == pNr){
-                    System.err.println("A person with this Social Security Number already exists!"); //Fixa label med Error
+                   //Fixa label med Error
                     return false;
             }
             }
             Customer kund = new Customer(name, pNr);
             data.add(kund);
             kunder.add(kund);
+           
             return true; 
             }
         
@@ -49,6 +50,7 @@ public class BankLogic {
             Customer kund = new Customer(name, pNr);
             data.add(kund);
             kunder.add(kund);
+          
             
         }
 
