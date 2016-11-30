@@ -15,7 +15,7 @@ public class SavingsAccount extends Account{
      
     private boolean withdrawn = false;
     private double  interest = 1.01;
-    private String accountType = "Savingsaccount";
+    private  static String accountType = "Savingsaccount";
     private int kontonummer = getAccountNumberCounter() - 1;
      //Ett sparkonto ska ha ; saldo, interest,kontoNummer, kontoTyp, withdrawn
     
@@ -83,13 +83,13 @@ public class SavingsAccount extends Account{
                 super.ammountOfWithdraws += 1;
                 return true;
                 } else{
-                  System.out.println("Not enough balance amount. Deposit some value.\n"); //Change to a Label
+                  //Change to a Label*Done
                 }
               }
               
               
             }else {
-              System.out.println("Not enough balance amount. Deposit some value.\n"); //Change to a Label
+              //System.out.println("Not enough balance amount. Deposit some value.\n"); //Change to a Label
               return false;
             }
             return false;
@@ -116,7 +116,7 @@ public class SavingsAccount extends Account{
 
   
 
-    public String getAccountType() {
+    public static String getAccountType() {
         return accountType;
     }
 
@@ -139,6 +139,7 @@ public class SavingsAccount extends Account{
     public void setSaldo(double saldo) {
         this.balance = balance;
     }
+    
 
     @Override
     public String toString() {

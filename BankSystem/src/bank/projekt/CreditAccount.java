@@ -10,7 +10,7 @@ package bank.projekt;
  * @author Micke
  */
 public class CreditAccount extends Account{
-    private String accountType = "KreditKonto";
+    private static String accountType = "Creditaccount";
     private int kontoNummer = getAccountNumberCounter() - 1;
    
     private double saldo = 1000;
@@ -21,19 +21,20 @@ public class CreditAccount extends Account{
     
     //Ett kreditkonto ska ha ; saldo, kontoNummer, interest, skuldInterest,  kontoTyp, kreditGräns
     public CreditAccount(){
-        
+       
         this.saldo = saldo;
-        this.accountType = accountType;
+        //this.accountType = accountType;
         this.debt_interest = debt_interest;
         this.interest = 0.005;
         this.limit = limit;
         this.kontoNummer = kontoNummer;
         
         
+        
     }
  
 
-    public String getAccountType() {
+    public static String getAccountType() {
         return accountType;
     }
 

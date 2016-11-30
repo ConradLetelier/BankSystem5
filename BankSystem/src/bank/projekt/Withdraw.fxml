@@ -19,21 +19,26 @@
             </ImageView>
          </children>
       </AnchorPane>
-      <Label layoutX="165.0" layoutY="143.0" text="Bank Withdrawal Function">
+      <Label layoutX="176.0" layoutY="144.0" text="Bank Withdrawal Function">
          <font>
             <Font name="System Bold" size="14.0" />
          </font>
       </Label>
-      <TextField fx:id="amountField" layoutX="162.0" layoutY="223.0" prefHeight="25.0" prefWidth="159.0" />
-      <Label layoutX="165.0" layoutY="193.0" text="Enter Withdraw Amount">
+      <TextField fx:id="amountField" layoutX="184.0" layoutY="223.0" prefHeight="25.0" prefWidth="159.0" />
+      <Label layoutX="189.0" layoutY="185.0" text="Enter Withdraw Amount">
          <font>
             <Font size="14.0" />
          </font>
       </Label>
       <Separator layoutY="173.0" prefHeight="0.0" prefWidth="536.0" />
-      <Button fx:id="withdrawButton" layoutX="162.0" layoutY="267.0" mnemonicParsing="false" onAction="#withdraw" prefWidth="70.0" text="Withdraw" />
-      <Button layoutX="253.0" layoutY="267.0" mnemonicParsing="false" prefWidth="70.0" text="Clear" />
+      <Button fx:id="withdrawButton" layoutX="171.0" layoutY="267.0" mnemonicParsing="false" onAction="#withdraw" prefWidth="70.0" text="Withdraw" />
+      <Button fx:id="clearButton" layoutX="289.0" layoutY="267.0" mnemonicParsing="false" onAction="#clear" prefWidth="70.0" text="Clear" />
       <Button fx:id="cancelButton" layoutX="14.0" layoutY="335.0" mnemonicParsing="false" onAction="#cancel" prefWidth="60.0" text="Cancel" />
       <Separator layoutY="129.0" prefHeight="3.0" prefWidth="527.0" />
+      <Label fx:id="notification" layoutX="171.0" layoutY="292.0" prefHeight="58.0" prefWidth="235.0">
+         <font>
+            <Font size="14.0" />
+         </font>
+      </Label>
    </children>
 </AnchorPane>

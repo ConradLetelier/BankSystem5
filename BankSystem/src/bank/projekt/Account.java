@@ -111,6 +111,7 @@ public abstract class Account {
         }
         return info;
     }
+    
 
     public static String closeCurrentAccount(Account acc) {
         String SomethingReturn = "";

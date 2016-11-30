@@ -585,6 +585,7 @@ public class MainpageController implements Initializable {
         table2.setItems(data2);
         
         
+        
     }
 
 }

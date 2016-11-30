@@ -38,6 +38,8 @@ public class WithdrawController implements Initializable {
     private Button cancelButton;
     @FXML
     private TextField amountField;
+    @FXML
+    private Label notification;
 
     @FXML
     private void cancel(ActionEvent event) throws IOException {
@@ -55,15 +57,25 @@ public class WithdrawController implements Initializable {
                 throw new Exception();
             }
         double amount = Double.parseDouble(amountField.getText());
-        BankLogic.withdraw(MainpageController.pNr, accountnumber, amount);
+        if(BankLogic.withdraw(MainpageController.pNr, accountnumber, amount)){
         MainpageController.withdrawAmount = 0;
         Stage stage = (Stage) withdrawButton.getScene().getWindow();
         stage.close();
+        }
+        else{
+            throw new Exception();
+        }
+        
 
     }
         catch(Exception e){
-            System.err.println("That is not a valid input. Please try again.");
+            notification.setText("Withdraw not valid");
         }
+    }
+    @FXML
+    private void clear(ActionEvent event) {
+    amountField.setText("");
+    
     }
 
     @Override
