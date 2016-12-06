@@ -2,12 +2,12 @@
 package bank.projekt;
 
 import java.util.ArrayList;
-import java.util.Date;
+
 
 
 public abstract class Account {
-    //skapa object av class Date
-    static Date date = new Date();
+    
+   
     //instans variable
     protected double balance = 0;
     private String acct_type;
@@ -72,6 +72,7 @@ public abstract class Account {
         return acct_type;
     }
     public void deposit(double value) {
+        try{
         balance += value;
 
 
@@ -79,7 +80,9 @@ public abstract class Account {
         Transactions trans = new Transactions(accountNumber, "Deposition: ", value, getBalance(), Transactions.Date());
 
         transactionsList.add(trans);
-        
+        }catch(Exception e){
+            System.out.println("Deposit error");
+        }
         
     }
     public int getAccountNumber() {

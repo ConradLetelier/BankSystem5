@@ -36,7 +36,11 @@ public class DepositController implements Initializable {
     @FXML
     private Button cancelButton;
     @FXML
+    private Button clearButton;
+    @FXML
     private TextField amountField;
+    @FXML
+    private Label notification;
 
     @FXML
     private void cancel(ActionEvent event) throws IOException {
@@ -46,28 +50,31 @@ public class DepositController implements Initializable {
         stage.close();
 
     }
-        @FXML
+     @FXML
+    private void clear(ActionEvent event) {
+    amountField.setText("");
+    
+    }
+
+    @FXML
     private void deposit(ActionEvent event) throws IOException {
-        
-        try{
+
+        try {
             amountField.setText(amountField.getText().replaceAll("[^0-9]", ""));
-            if(amountField.getText().length() == 0){
+
+            if (amountField.getText().length() == 0) {
                 throw new Exception();
             }
-        }
-        catch(Exception e){
-            System.err.println("That is not a valid input, please try again.");
-        }
 
-        MainpageController.depositamount = Double.parseDouble(amountField.getText());
-        try{
+            MainpageController.depositamount = Double.parseDouble(amountField.getText());
+
+            //MainpageController.depositamount = Double.parseDouble(amountField.getText());
             BankLogic.deposit(MainpageController.pNr, accountnumber, MainpageController.depositamount);
+            Stage stage = (Stage) depositButton.getScene().getWindow();
+            stage.close();
+        } catch (Exception e) {
+            notification.setText("Deposit failed. Try again");
         }
-        catch(Exception e){
-            System.out.println(e);
-        }
-        Stage stage = (Stage) depositButton.getScene().getWindow();
-        stage.close();
 
     }
 

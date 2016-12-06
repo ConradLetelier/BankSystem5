@@ -267,6 +267,7 @@ public class BankLogic {
 
     public static boolean deposit(long pNr, int accountId, double amount) {
         //Gör en insättning på konto med kontonnummer accountId som tillhör kunden pNr, returnerar true om det gick bra annars false.
+        try{
         for (Customer person : kunder) {
             if (person.getPnr() == pNr) {
 
@@ -281,6 +282,11 @@ public class BankLogic {
 
         }
         return false;
+    }
+        catch(Exception e){
+            System.out.println("Deposit error");
+            return false;
+        }
     }
 
     public static boolean withdraw(long pNr, int accountId, double amount) {

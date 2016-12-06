@@ -462,6 +462,7 @@ public class MainpageController implements Initializable {
             labelText.setText("");
             
         }
+        else
         {
             labelText.setText("Please choose an account");
 
@@ -583,7 +584,8 @@ public class MainpageController implements Initializable {
         BankLogic.InitilizeList();
         table1.setItems(data);
         table2.setItems(data2);
-        
+        BankLogic.addCustomer("Conrad Letelier", 222222);
+                
         
         
     }
