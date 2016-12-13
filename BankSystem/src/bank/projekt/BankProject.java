@@ -5,6 +5,8 @@
  */
 package bank.projekt;
 
+import bank.projekt.Database.DBConnection;
+import java.util.ArrayList;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 import javafx.application.Application;
@@ -49,9 +51,10 @@ public class BankProject extends Application {
      * @param args the command line arguments
      */
     public static void main(String[] args) {
-       launch(args);
-    
-        
+ 
+        launch(args);
+
+             
     }
     
 }

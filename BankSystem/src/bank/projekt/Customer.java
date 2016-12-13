@@ -5,6 +5,7 @@
  */
 package bank.projekt;
 
+import bank.projekt.Database.DBConnection;
 import java.util.ArrayList;
 /**
  *
@@ -13,6 +14,7 @@ import java.util.ArrayList;
 public class Customer {
     private String name;
     long pNr;
+    private int uniqueID;
     
      private ArrayList<Account> accounts = new ArrayList<Account>();
     public Customer(){
@@ -38,7 +40,7 @@ public class Customer {
         return pNr;
     }
 
-    public void setpNr(long pNr) {
+    public void setPnr(long pNr) {
         this.pNr = pNr;
     }
        public String getCustomer(){
@@ -52,8 +54,15 @@ public class Customer {
     
            public void addAccounts(Account s) {
      this.accounts.add(s);
-     
+     if(s.getAcct_type().equals("CreditAccount")){
+         DBConnection.addAcc(s.getAccountNumber(), s.getBalance(), 0, 1, s.getAmmountOfWithdraws(), getPnr());
+     }else{
+         DBConnection.addAcc(s.getAccountNumber(), s.getBalance(), 1, 0, s.getAmmountOfWithdraws(), getPnr());
+     }
    }
+           public void addAccountToList(Account s){
+               this.accounts.add(s);
+           }
              public int getLastAccountNr() {
      return accounts.get(accounts.size()-1).getAccountNumber();
    }
@@ -61,6 +70,15 @@ public class Customer {
              public Account getLastAccount(){
                  return accounts.get(accounts.size()-1);
              }
+
+    public int getUniqueID() {
+        return uniqueID;
+    }
+
+    public void setUniqueID(int uniqueID) {
+        this.uniqueID = uniqueID;
+    }
+             
 
 
 }

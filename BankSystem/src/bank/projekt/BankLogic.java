@@ -5,6 +5,7 @@
  */
 package bank.projekt;
 
+import bank.projekt.Database.DBConnection;
 import static bank.projekt.MainpageController.data;
 import java.util.ArrayList;
 
@@ -15,6 +16,7 @@ import java.util.ArrayList;
 public class BankLogic {
 
     public static ArrayList<Customer> kunder = new ArrayList<Customer>();
+    public static ArrayList<Integer> accountNumbers = DBConnection.getAllAccountNumbers();
 
     public static ArrayList<String> getCustomers() {
         //Returnerar en ArrayList<String> som innehåller en presentation av bankens alla kunder (personnummer och namn)
@@ -41,12 +43,14 @@ public class BankLogic {
             Customer kund = new Customer(name, pNr);
             data.add(kund);
             kunder.add(kund);
+            DBConnection.addCust(name, pNr);
 
             return true;
         } else {
             Customer kund = new Customer(name, pNr);
             data.add(kund);
             kunder.add(kund);
+            DBConnection.addCust(name, pNr);
 
         }
 
@@ -149,7 +153,7 @@ public class BankLogic {
 
                 if (e.pNr == pNr) {
                     e.setName(name);
-
+                    DBConnection.updateStatic(name, pNr);
                     return true;
 
                 }
@@ -224,6 +228,15 @@ public class BankLogic {
         kunder.remove(temp);
 
         data.remove(temp);
+        int custID = DBConnection.getID(pNr);
+        for (int i = 0; i < accountNumbers.size(); i++) {
+            int owner = DBConnection.getAccountOwner(i);
+            if (owner == custID) {
+                DBConnection.removeTransaction(i);
+                DBConnection.removeAccount(i);
+            }
+        }
+        DBConnection.removeStatic(pNr);
 
         return removed;
     }
@@ -267,23 +280,24 @@ public class BankLogic {
 
     public static boolean deposit(long pNr, int accountId, double amount) {
         //Gör en insättning på konto med kontonnummer accountId som tillhör kunden pNr, returnerar true om det gick bra annars false.
-        try{
-        for (Customer person : kunder) {
-            if (person.getPnr() == pNr) {
+        try {
+            for (Customer person : kunder) {
+                if (person.getPnr() == pNr) {
 
-                for (Account account : person.getAllAccounts()) {
-                    if (account.getAccountNumber() == accountId) {
+                    for (Account account : person.getAllAccounts()) {
+                        if (account.getAccountNumber() == accountId) {
 
-                        account.deposit(amount);
-                        return true;
+                            account.deposit(amount);
+                            int uniqueID = DBConnection.getID(pNr);
+                            DBConnection.addTransaction(amount, account.getBalance(), Transactions.Date(), "Deposit", accountId, uniqueID);
+                            return true;
+                        }
                     }
                 }
-            }
 
-        }
-        return false;
-    }
-        catch(Exception e){
+            }
+            return false;
+        } catch (Exception e) {
             System.out.println("Deposit error");
             return false;
         }
@@ -303,6 +317,8 @@ public class BankLogic {
                         if (account instanceof CreditAccount) {
 
                             if (((CreditAccount) account).withdraw(amount)) {
+                                int uniqueID = DBConnection.getID(pNr);
+                                DBConnection.addTransaction(amount, account.getBalance(), Transactions.Date(), "Withdraw", accountId, uniqueID);
                                 check = true;
                                 break;
                             } else {
@@ -313,7 +329,8 @@ public class BankLogic {
                         if (account instanceof SavingsAccount) {
 
                             if (((SavingsAccount) account).withdraw(amount)) {
-
+                                int uniqueID = DBConnection.getID(pNr);
+                                DBConnection.addTransaction(amount, account.getBalance(), Transactions.Date(), "Withdraw", accountId, uniqueID);
                                 check = true;
                                 break;
                             } else {
@@ -367,6 +384,7 @@ public class BankLogic {
                                 client.getAllAccounts().remove(acc);
 
                                 MainpageController.data2.remove(acc);
+                                DBConnection.removeAccount(accountId);
                                 System.out.println(SomethingReturn);
 
                                 return SomethingReturn;
@@ -384,7 +402,7 @@ public class BankLogic {
                             client.getAllAccounts().remove(acc);
 
                             MainpageController.data2.remove(acc);
-
+                            DBConnection.removeAccount(accountId);
 //                        return "Account close" + data;
                             System.out.println(SomethingReturn);
                             return SomethingReturn;
@@ -455,12 +473,78 @@ public class BankLogic {
 
         }
 
-    }
+//        for (int i = 1; i <= 50; i++) {
+//            String a = DBConnection.getName(i);
+//            if (a.equals("null")) {
+//                continue;
+//            }
+//            long b = DBConnection.getPNR(i);
+//
+//            String newB = String.valueOf(b);
+//            if (newB.equals("0")) {
+//                continue;
+//            }
+//            Customer input = new Customer(a, b);
+//            BankLogic.kunder.add(input);
+//        }
+        DBConnection.initilizeCustomerList();
+        for (int i = 0; i < BankLogic.kunder.size(); i++) {
+            kunder.get(i).setUniqueID(DBConnection.getID(kunder.get(i).getPnr()));
+        }
 
-    //Programmet ska göras så stabilt som möjligt, även om användaren missförstår instruktionerna ska han/hon inte lyckas krascha programmet i första taget. 
-    //Glöm heller inte att hantera om man försöker spara till en fil som är skrivskyddad eller om man försöker öppna en korrupt fil.
-    //Fix writing method
-    //När man tar bort ett konto skall räntan beräknas som saldo multiplicerat med ränta/100. Saldo och ränta ska visas på skärmen vid avslutande av kontot.
-    //OBS! Enda gången ränta läggs på är alltså när kontot tas bort eftersom årsskiften inte hanteras i denna version av systemet. 
-    //Alla transaktioner förutsätts ske under ett och samma kalenderår.
+        //  ArrayList<Integer> accountNumbers = DBConnection.getAllAccountNumbers();
+        for (int i = 0; i < accountNumbers.size(); i++) {
+            int accNumber = accountNumbers.get(i);
+            int id = DBConnection.getAccountOwner(accNumber);
+
+            for (int j = 0; j < kunder.size(); j++) {
+                if (id == kunder.get(j).getUniqueID()) {
+                    if (DBConnection.getAccountType(accNumber) == 1) {
+                        SavingsAccount s = new SavingsAccount();
+                        s.setBalance(DBConnection.getBalance(accNumber));
+                        s.setAmmountOfWithdraws(DBConnection.getWithdraws(accNumber));
+                        s.setAccountNumber(accNumber);
+                        //   Account.addCounter();
+                        ArrayList list = DBConnection.getTransactions(accNumber);
+                        for (int k = 0; k < list.size(); k++) {
+                            String ss = (String) list.get(k);
+                            String[] parts = ss.split(",");
+                            String type = parts[3];
+                            double amount1 = Double.valueOf(parts[1]);
+                            double balance1 = Double.valueOf(parts[2]);
+                            String day1 = parts[4];
+                            s.addTransaction(accNumber, type, balance1, amount1, day1);
+                        }
+                        kunder.get(j).addAccountToList(s);
+                    } else {
+                        CreditAccount s = new CreditAccount();
+                        s.setBalance(DBConnection.getBalance(accNumber));
+                        s.setAmmountOfWithdraws(DBConnection.getWithdraws(accNumber));
+                        s.setAccountNumber(accNumber);
+                        //    Account.addCounter();
+                        ArrayList list = DBConnection.getTransactions(accNumber);
+                       for (int k = 0; k < list.size(); k++) {
+                            String ss = (String) list.get(k);
+                            String[] parts = ss.split(",");
+                            String type = parts[3];
+                            double amount1 = Double.valueOf(parts[1]);
+                            double balance1 = Double.valueOf(parts[2]);
+                            String day1 = parts[4];
+                            s.addTransaction(accNumber, type, balance1, amount1, day1);
+                        }
+
+                        kunder.get(j).addAccountToList(s);
+                    }
+
+                }
+            }
+        }
+
+        //Programmet ska göras så stabilt som möjligt, även om användaren missförstår instruktionerna ska han/hon inte lyckas krascha programmet i första taget. 
+        //Glöm heller inte att hantera om man försöker spara till en fil som är skrivskyddad eller om man försöker öppna en korrupt fil.
+        //Fix writing method
+        //När man tar bort ett konto skall räntan beräknas som saldo multiplicerat med ränta/100. Saldo och ränta ska visas på skärmen vid avslutande av kontot.
+        //OBS! Enda gången ränta läggs på är alltså när kontot tas bort eftersom årsskiften inte hanteras i denna version av systemet. 
+        //Alla transaktioner förutsätts ske under ett och samma kalenderår.
+    }
 }

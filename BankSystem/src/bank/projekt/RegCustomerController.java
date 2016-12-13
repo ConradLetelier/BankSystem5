@@ -91,7 +91,7 @@ public class RegCustomerController implements Initializable {
         if(name.length() == 0){
             throw new Exception();
         }
-        if(txtpn.getLength()!=12){
+        if(txtpn.getLength()!=10){
             special2 = "2";
             throw new Exception();
         }

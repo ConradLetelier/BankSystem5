@@ -1,6 +1,7 @@
 
 package bank.projekt;
 
+import bank.projekt.Database.DBConnection;
 import java.util.ArrayList;
 
 
@@ -36,12 +37,19 @@ public abstract class Account {
     }
 //konstruktor
     public Account() {
-        
+        accountNumberCounter++;
+        for(int i = 0; i < BankLogic.accountNumbers.size();i++){
+            if(accountNumber==BankLogic.accountNumbers.get(i)){
+                accountNumberCounter++;
+            }
+        }
         accountNumber = accountNumberCounter;
-          accountNumberCounter++;
+        
+          
     }
 
     public static int getAccountNumberCounter() {
+        
         return accountNumberCounter;
     }
 
@@ -68,18 +76,24 @@ public abstract class Account {
     public void setBalance(double balance) {
         this.balance = balance;
     }
+    public void setBalanceDatabse(double balance, int accNr){
+        
+    }
     public String getAcct_type() {
         return acct_type;
     }
     public void deposit(double value) {
         try{
         balance += value;
-
+        
 
 
         Transactions trans = new Transactions(accountNumber, "Deposition: ", value, getBalance(), Transactions.Date());
 
         transactionsList.add(trans);
+      //  DBConnection.addTransaction(value, getBalance(), Transactions.Date(), "null","Deposit", accountNumber, accountNumber);
+    
+            DBConnection.setBalance(getAccountNumber(), balance);
         }catch(Exception e){
             System.out.println("Deposit error");
         }
@@ -108,13 +122,14 @@ public abstract class Account {
     
     public String toString() {
         String info = "";
+    
         for (int i = 0; i < transactionsList.size(); i++) {
             String s = transactionsList.get(i).toString();
             info += s + "\n";
         }
         return info;
     }
-    
+  
 
     public static String closeCurrentAccount(Account acc) {
         String SomethingReturn = "";
@@ -181,6 +196,18 @@ public abstract class Account {
     public String specialtoString(){
         return "temp";
     }
-  
+
+    public void setAccountNumber(int accountNumber) {
+        this.accountNumber = accountNumber;
+    }
+    public static void addCounter(){
+        accountNumberCounter++;
+    }
+
+  public void addTransaction(int accNr, String type, double balance1, double amount1,String day ){
+      Transactions input = new Transactions(accNr, type,amount1, balance1,day);
+      transactionsList.add(input);
+              
+  }
 
 }

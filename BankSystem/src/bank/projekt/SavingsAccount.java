@@ -5,6 +5,8 @@
  */
 package bank.projekt;
 
+import bank.projekt.Database.DBConnection;
+
 /**
  *
  * @author Micke
@@ -57,8 +59,10 @@ public class SavingsAccount extends Account{
               
               if(firstWithdrawal==false){
                   super.ammountOfWithdraws += 1;
+                  DBConnection.setWithdraws(getAccountNumber(), getAmmountOfWithdraws());
                   balance-= value;
                 balance = Math.round(balance * 100.0) / 100.0;
+                DBConnection.setBalance(getAccountNumber(), getBalance());
                
                 try{
                     Transactions trans = new Transactions(getAccountNumber(), "Withdrawal: ", value, getBalance(), Transactions.Date());
@@ -75,12 +79,13 @@ public class SavingsAccount extends Account{
                 if (balance>=1.02*value){
                   balance-=1.02*value;
                   balance = Math.round(balance * 100.0) / 100.0;
-                
+                    DBConnection.setBalance(getAccountNumber(), getBalance());
                   Transactions trans = new Transactions(getAccountNumber(), "Withdrawal: ", value*1.02, getBalance(), Transactions.Date());
 
             transactionsList.add(trans);
                
                 super.ammountOfWithdraws += 1;
+                DBConnection.setWithdraws(getAccountNumber(), getAmmountOfWithdraws());
                 return true;
                 } else{
                   //Change to a Label*Done

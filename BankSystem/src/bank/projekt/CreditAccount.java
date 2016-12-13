@@ -5,6 +5,8 @@
  */
 package bank.projekt;
 
+import bank.projekt.Database.DBConnection;
+
 /**
  *
  * @author Micke
@@ -28,6 +30,7 @@ public class CreditAccount extends Account{
         this.interest = 0.005;
         this.limit = limit;
         this.kontoNummer = kontoNummer;
+        super.setAcct_type("CreditAccount");
         
         
         
@@ -92,7 +95,10 @@ public class CreditAccount extends Account{
         else{
             
             super.setBalance(super.getBalance() - value);
+            DBConnection.setBalance(getAccountNumber(), getBalance());
+            
             super.ammountOfWithdraws += 1;
+            DBConnection.setWithdraws(getAccountNumber(), getAmmountOfWithdraws());
             Transactions trans = new Transactions(getAccountNumber(), "Withdrawal: ", value, super.getBalance(), Transactions.Date());
 
             transactionsList.add(trans);

@@ -148,6 +148,8 @@ public class MainpageController implements Initializable {
     private void TransactionHistory(ActionEvent event) throws IOException{
         //Do something
         if(!(table2.getSelectionModel().getSelectedIndex() == -1) && table2.getSelectionModel().getSelectedItem().getTransactionsList().size() > 0){
+          
+            
             accountnumber = table2.getSelectionModel().getSelectedItem().getAccountNumber();
             String keep = "";
             
@@ -582,11 +584,14 @@ public class MainpageController implements Initializable {
         balanceColumn.setCellValueFactory(new PropertyValueFactory<Account, Double>("balance"));
         withdrawColumn.setCellValueFactory(new PropertyValueFactory<Account, Integer>("ammountOfWithdraws"));
         BankLogic.InitilizeList();
-        table1.setItems(data);
+       table1.setItems(data);
         table2.setItems(data2);
-        BankLogic.addCustomer("Conrad Letelier", 222222);
-                
+       
         
+         for (int i = 0; i < BankLogic.kunder.size(); i++) {
+           data.add(BankLogic.kunder.get(i));
+  }        
+       table1.setItems(data); 
         
     }
 
