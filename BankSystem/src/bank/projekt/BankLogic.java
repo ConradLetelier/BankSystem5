@@ -384,6 +384,7 @@ public class BankLogic {
                                 client.getAllAccounts().remove(acc);
 
                                 MainpageController.data2.remove(acc);
+                                DBConnection.removeTransaction(accountId);
                                 DBConnection.removeAccount(accountId);
                                 System.out.println(SomethingReturn);
 
@@ -402,6 +403,7 @@ public class BankLogic {
                             client.getAllAccounts().remove(acc);
 
                             MainpageController.data2.remove(acc);
+                            DBConnection.removeTransaction(accountId);
                             DBConnection.removeAccount(accountId);
 //                        return "Account close" + data;
                             System.out.println(SomethingReturn);

@@ -172,7 +172,7 @@ public class DBConnection {
         
         try {
             Statement statement = connection.createStatement();
-            statement.executeUpdate("delete from transactions where Accounts_accountID =" + accNr);
+            statement.executeUpdate("delete from transaction where Accounts_accountID =" + accNr);
 
         } catch (SQLException ex) {
             Logger.getLogger(DBConnection.class.getName()).log(Level.SEVERE, null, ex);
